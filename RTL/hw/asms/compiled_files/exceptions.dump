@@ -1,0 +1,175 @@
+
+asms/compiled_files/exceptions.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <_start>:
+   0:	00000013          	nop
+   4:	00000013          	nop
+   8:	00000013          	nop
+   c:	00000013          	nop
+  10:	0ff0000f          	fence
+  14:	0ff0000f          	fence
+  18:	00000013          	nop
+  1c:	00000013          	nop
+  20:	00000097          	auipc	ra,0x0
+  24:	01c08093          	addi	ra,ra,28 # 3c <trap_address_1>
+  28:	30509073          	csrw	mtvec,ra
+  2c:	00001137          	lui	sp,0x1
+  30:	00810113          	addi	sp,sp,8 # 1008 <end+0xe21>
+  34:	00212183          	lw	gp,2(sp)
+  38:	11c0006f          	j	154 <fail1>
+
+0000003c <trap_address_1>:
+  3c:	0ff0000f          	fence
+  40:	00000013          	nop
+  44:	34202273          	csrr	tp,mcause
+  48:	343023f3          	csrr	t2,mtval
+  4c:	00400293          	li	t0,4
+  50:	00001437          	lui	s0,0x1
+  54:	00a40413          	addi	s0,s0,10 # 100a <end+0xe23>
+  58:	0e028863          	beqz	t0,148 <fail0>
+  5c:	0e040663          	beqz	s0,148 <fail0>
+  60:	10521063          	bne	tp,t0,160 <fail2>
+  64:	14839863          	bne	t2,s0,1b4 <fail9>
+  68:	00000313          	li	t1,0
+  6c:	00000097          	auipc	ra,0x0
+  70:	01808093          	addi	ra,ra,24 # 84 <trap_address_2>
+  74:	30509073          	csrw	mtvec,ra
+  78:	0ff0000f          	fence
+  7c:	001110a3          	sh	ra,1(sp)
+  80:	0ec0006f          	j	16c <fail3>
+
+00000084 <trap_address_2>:
+  84:	0ff0000f          	fence
+  88:	00000013          	nop
+  8c:	34202273          	csrr	tp,mcause
+  90:	343023f3          	csrr	t2,mtval
+  94:	00600293          	li	t0,6
+  98:	00001437          	lui	s0,0x1
+  9c:	00940413          	addi	s0,s0,9 # 1009 <end+0xe22>
+  a0:	0a028463          	beqz	t0,148 <fail0>
+  a4:	0a040263          	beqz	s0,148 <fail0>
+  a8:	0c521863          	bne	tp,t0,178 <fail4>
+  ac:	10839463          	bne	t2,s0,1b4 <fail9>
+  b0:	00130313          	addi	t1,t1,1
+  b4:	00530463          	beq	t1,t0,bc <escape_loop>
+  b8:	30200073          	mret
+
+000000bc <escape_loop>:
+  bc:	00000097          	auipc	ra,0x0
+  c0:	02408093          	addi	ra,ra,36 # e0 <trap_address_3>
+  c4:	30509073          	csrw	mtvec,ra
+  c8:	00000013          	nop
+  cc:	0ff0000f          	fence
+  d0:	00000013          	nop
+  d4:	0ff0000f          	fence
+  d8:	00100073          	ebreak
+  dc:	0a80006f          	j	184 <fail5>
+
+000000e0 <trap_address_3>:
+  e0:	0ff0000f          	fence
+  e4:	00000013          	nop
+  e8:	34202273          	csrr	tp,mcause
+  ec:	00300293          	li	t0,3
+  f0:	04028c63          	beqz	t0,148 <fail0>
+  f4:	08521e63          	bne	tp,t0,190 <fail6>
+  f8:	00000097          	auipc	ra,0x0
+  fc:	02408093          	addi	ra,ra,36 # 11c <trap_address_4>
+ 100:	30509073          	csrw	mtvec,ra
+ 104:	00000013          	nop
+ 108:	0ff0000f          	fence
+ 10c:	00000013          	nop
+ 110:	0ff0000f          	fence
+ 114:	00000073          	ecall
+ 118:	0840006f          	j	19c <fail7>
+
+0000011c <trap_address_4>:
+ 11c:	0ff0000f          	fence
+ 120:	00000013          	nop
+ 124:	34202273          	csrr	tp,mcause
+ 128:	00b00293          	li	t0,11
+ 12c:	00028e63          	beqz	t0,148 <fail0>
+ 130:	06521c63          	bne	tp,t0,1a8 <fail8>
+ 134:	000010b7          	lui	ra,0x1
+ 138:	30509073          	csrw	mtvec,ra
+
+0000013c <pass>:
+ 13c:	00000513          	li	a0,0
+ 140:	05d00893          	li	a7,93
+ 144:	00100073          	ebreak
+
+00000148 <fail0>:
+ 148:	00100513          	li	a0,1
+ 14c:	05d00893          	li	a7,93
+ 150:	00100073          	ebreak
+
+00000154 <fail1>:
+ 154:	00200513          	li	a0,2
+ 158:	05d00893          	li	a7,93
+ 15c:	00100073          	ebreak
+
+00000160 <fail2>:
+ 160:	00400513          	li	a0,4
+ 164:	05d00893          	li	a7,93
+ 168:	00100073          	ebreak
+
+0000016c <fail3>:
+ 16c:	00600513          	li	a0,6
+ 170:	05d00893          	li	a7,93
+ 174:	00100073          	ebreak
+
+00000178 <fail4>:
+ 178:	00800513          	li	a0,8
+ 17c:	05d00893          	li	a7,93
+ 180:	00100073          	ebreak
+
+00000184 <fail5>:
+ 184:	00a00513          	li	a0,10
+ 188:	05d00893          	li	a7,93
+ 18c:	00100073          	ebreak
+
+00000190 <fail6>:
+ 190:	00c00513          	li	a0,12
+ 194:	05d00893          	li	a7,93
+ 198:	00100073          	ebreak
+
+0000019c <fail7>:
+ 19c:	00e00513          	li	a0,14
+ 1a0:	05d00893          	li	a7,93
+ 1a4:	00100073          	ebreak
+
+000001a8 <fail8>:
+ 1a8:	01000513          	li	a0,16
+ 1ac:	05d00893          	li	a7,93
+ 1b0:	00100073          	ebreak
+
+000001b4 <fail9>:
+ 1b4:	01200513          	li	a0,18
+ 1b8:	05d00893          	li	a7,93
+ 1bc:	00100073          	ebreak
+
+000001c0 <data>:
+ 1c0:	2641                	.insn	2, 0x2641
+ 1c2:	0000                	.insn	2, 0x
+ 1c4:	7200                	.insn	2, 0x7200
+ 1c6:	7369                	.insn	2, 0x7369
+ 1c8:	01007663          	bgeu	zero,a6,1d4 <data+0x14>
+ 1cc:	001c                	.insn	2, 0x001c
+ 1ce:	0000                	.insn	2, 0x
+ 1d0:	7205                	.insn	2, 0x7205
+ 1d2:	3376                	.insn	2, 0x3376
+ 1d4:	6932                	.insn	2, 0x6932
+ 1d6:	7032                	.insn	2, 0x7032
+ 1d8:	5f31                	.insn	2, 0x5f31
+ 1da:	697a                	.insn	2, 0x697a
+ 1dc:	32727363          	bgeu	tp,t2,502 <end+0x31b>
+ 1e0:	3070                	.insn	2, 0x3070
+ 1e2:	0800                	.insn	2, 0x0800
+ 1e4:	0a01                	.insn	2, 0x0a01
+ 1e6:	Address 0x1e6 is out of bounds.
+
+
+000001e7 <end>:
+	...

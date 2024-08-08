@@ -1,0 +1,101 @@
+
+asms/compiled_files/interrupts.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <_start>:
+   0:	00800093          	li	ra,8
+   4:	30009073          	csrw	mstatus,ra
+   8:	000010b7          	lui	ra,0x1
+   c:	88808093          	addi	ra,ra,-1912 # 888 <end+0x781>
+  10:	30409073          	csrw	mie,ra
+  14:	00000097          	auipc	ra,0x0
+  18:	04008093          	addi	ra,ra,64 # 54 <interrupt_handler>
+  1c:	30509073          	csrw	mtvec,ra
+  20:	80000137          	lui	sp,0x80000
+  24:	01010113          	addi	sp,sp,16 # 80000010 <MSIP_BASE_ADDRESS>
+  28:	00100193          	li	gp,1
+  2c:	00312023          	sw	gp,0(sp)
+  30:	800000b7          	lui	ra,0x80000
+  34:	0000a103          	lw	sp,0(ra) # 80000000 <MTIME_BASE_ADDRESS>
+  38:	00310113          	addi	sp,sp,3
+  3c:	800001b7          	lui	gp,0x80000
+  40:	00818193          	addi	gp,gp,8 # 80000008 <MTIMECMP_BASE_ADDRESS>
+  44:	0021a023          	sw	sp,0(gp)
+  48:	0001a223          	sw	zero,4(gp)
+
+0000004c <loop>:
+  4c:	00000013          	nop
+  50:	ffdff06f          	j	4c <loop>
+
+00000054 <interrupt_handler>:
+  54:	34202173          	csrr	sp,mcause
+  58:	800001b7          	lui	gp,0x80000
+  5c:	00b18193          	addi	gp,gp,11 # 8000000b <MTIMECMP_BASE_ADDRESS+0x3>
+  60:	80000237          	lui	tp,0x80000
+  64:	00320213          	addi	tp,tp,3 # 80000003 <MTIME_BASE_ADDRESS+0x3>
+  68:	800002b7          	lui	t0,0x80000
+  6c:	00728293          	addi	t0,t0,7 # 80000007 <MTIME_BASE_ADDRESS+0x7>
+  70:	04018c63          	beqz	gp,c8 <fail0>
+  74:	04020a63          	beqz	tp,c8 <fail0>
+  78:	04028863          	beqz	t0,c8 <fail0>
+  7c:	00410663          	beq	sp,tp,88 <check_software_interrupt>
+  80:	00510e63          	beq	sp,t0,9c <check_timer_interrupt>
+  84:	30200073          	mret
+
+00000088 <check_software_interrupt>:
+  88:	80000137          	lui	sp,0x80000
+  8c:	01010113          	addi	sp,sp,16 # 80000010 <MSIP_BASE_ADDRESS>
+  90:	00012023          	sw	zero,0(sp)
+  94:	00100513          	li	a0,1
+  98:	30200073          	mret
+
+0000009c <check_timer_interrupt>:
+  9c:	fff00113          	li	sp,-1
+  a0:	800001b7          	lui	gp,0x80000
+  a4:	00818193          	addi	gp,gp,8 # 80000008 <MTIMECMP_BASE_ADDRESS>
+  a8:	0021a023          	sw	sp,0(gp)
+  ac:	00100593          	li	a1,1
+  b0:	00100793          	li	a5,1
+  b4:	00f51a63          	bne	a0,a5,c8 <fail0>
+  b8:	00f59e63          	bne	a1,a5,d4 <fail1>
+
+000000bc <pass>:
+  bc:	00000513          	li	a0,0
+  c0:	05d00893          	li	a7,93
+  c4:	00100073          	ebreak
+
+000000c8 <fail0>:
+  c8:	00100513          	li	a0,1
+  cc:	05d00893          	li	a7,93
+  d0:	00100073          	ebreak
+
+000000d4 <fail1>:
+  d4:	00200513          	li	a0,2
+  d8:	05d00893          	li	a7,93
+  dc:	00100073          	ebreak
+
+000000e0 <data>:
+  e0:	2641                	.insn	2, 0x2641
+  e2:	0000                	.insn	2, 0x
+  e4:	7200                	.insn	2, 0x7200
+  e6:	7369                	.insn	2, 0x7369
+  e8:	01007663          	bgeu	zero,a6,f4 <data+0x14>
+  ec:	001c                	.insn	2, 0x001c
+  ee:	0000                	.insn	2, 0x
+  f0:	7205                	.insn	2, 0x7205
+  f2:	3376                	.insn	2, 0x3376
+  f4:	6932                	.insn	2, 0x6932
+  f6:	7032                	.insn	2, 0x7032
+  f8:	5f31                	.insn	2, 0x5f31
+  fa:	697a                	.insn	2, 0x697a
+  fc:	32727363          	bgeu	tp,t2,422 <end+0x31b>
+ 100:	3070                	.insn	2, 0x3070
+ 102:	0800                	.insn	2, 0x0800
+ 104:	0a01                	.insn	2, 0x0a01
+ 106:	Address 0x106 is out of bounds.
+
+
+00000107 <end>:
+	...

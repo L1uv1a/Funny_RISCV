@@ -1,0 +1,157 @@
+[94m Auto compile verilog script[00m
+[96m by Dao Quyet[00m
+[93m Defines list:[00m
+[93m DETAILS[00m
+[95m File arguments list:[00m
+[95m rtl/decode.sv[00m
+[95m rtl/fetch.sv[00m
+[95m rtl/main_memory.sv[00m
+[95m rtl/regs.sv[00m
+[95m rtl/execute.sv[00m
+[95m tb/execute_tb.sv[00m
+[95m Included './rtl/decode.sv'[00m
+[95m Included './rtl/fetch.sv'[00m
+[95m Included './rtl/main_memory.sv'[00m
+[95m Included './rtl/regs.sv'[00m
+[95m Included './rtl/execute.sv'[00m
+[95m Included './tb/execute_tb.sv'[00m
+[96m iverilog command: iverilog -g2012 -o ./iverilog_output_file -DDETAILS ./rtl/decode.sv ./rtl/fetch.sv ./rtl/main_memory.sv ./rtl/regs.sv ./rtl/execute.sv ./tb/execute_tb.sv[00m
+No Memory Init
+VCD info: dumpfile ./vcds/execute_tb.vcd opened for output.
+VCD warning: $dumpvars: Package ($unit) is not dumpable with VCD.
+[94m>>> Reset released...[00m
+[[92mFETCH [00m] fetch_pc  =    0, instr_fetch  = [96m402081b3[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =    0, instr_fetch  = [96m402081b3[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m402081b3[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =    4, instr_fetch  = [96mf6a04113[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m402081b3[00m
+[92mRTYPE[00m +++ [92mADD[00m
+[92mSUB[00m x3, x1, x2
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =    8, instr_fetch  = [96m00008103[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96mf6a04113[00m
+[92mITYPE[00m +++ [92mSUB[00m
+[92mXOR[00m[92mI[00m x2, x0, -150
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   12, instr_fetch  = [96mfe311e23[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m00008103[00m
+[92mLOAD[00m +++ [92mSLT[00m
+[92mLB[00m x2, 0(x1)
+[[92mALU[00m] result = 4294967146
+
+[[92mFETCH [00m] fetch_pc  =   16, instr_fetch  = [96mfe1158e3[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96mfe311e23[00m
+[92mSTORE[00m +++ [92mSLTU[00m
+[92mSH[00m x3, 4294967292(x2)
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   20, instr_fetch  = [96m010000ef[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 1, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96mfe1158e3[00m
+[92mBRANCH[00m +++ [92mXOR[00m
+[92mBGE[00m x2, x1, 4294967280
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   24, instr_fetch  = [96m018081e7[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m010000ef[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[92mFETCH [00m] fetch_pc  =   24, instr_fetch  = [96m018081e7[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m018081e7[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[90mFETCH [00m] fetch_pc  = 4294967280, instr_fetch  = [96m00000000[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m018081e7[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[90mFETCH [00m] fetch_pc  = 4294967280, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[94m>>> fetch_pc changed to 16 due to Writeback[00m
+[[90mFETCH [00m] fetch_pc  = 4294967284, instr_fetch  = [96m00000000[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   16, instr_fetch  = [96mfe1158e3[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   16, instr_fetch  = [96mfe1158e3[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96mfe1158e3[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   20, instr_fetch  = [96m010000ef[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 1, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96mfe1158e3[00m
+[92mBRANCH[00m +++ [92mXOR[00m
+[92mBGE[00m x2, x1, 4294967280
+[[92mALU[00m] result = 0
+
+[[92mFETCH [00m] fetch_pc  =   24, instr_fetch  = [96m018081e7[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m010000ef[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[92mFETCH [00m] fetch_pc  =   24, instr_fetch  = [96m018081e7[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m018081e7[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[90mFETCH [00m] fetch_pc  = 4294967280, instr_fetch  = [96m00000000[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m018081e7[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[90mFETCH [00m] fetch_pc  = 4294967280, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[92mJAL[00m +++ [92mOR[00m
+[92mJAL[00m x1, 16
+[[92mALU[00m] result = 1
+
+[[90mFETCH [00m] fetch_pc  = 4294967284, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 1
+
+[[90mFETCH [00m] fetch_pc  = 4294967288, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+[[90mFETCH [00m] fetch_pc  = 4294967292, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc =    0, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m +++ [91mINVALID ALU [00m
+???
+[[92mALU[00m] result = 0
+
+./tb/execute_tb.sv:100: $finish called at 246000 (1ps)
+[92m COMPILED SUCCESSFULLY![00m

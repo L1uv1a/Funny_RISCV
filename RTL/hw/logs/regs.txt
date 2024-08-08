@@ -1,0 +1,79 @@
+[94m Auto compile verilog script[00m
+[96m by Dao Quyet[00m
+[93m Defines list:[00m
+[93m DETAILS[00m
+[95m File arguments list:[00m
+[95m rtl/regs.sv[00m
+[95m tb/regs_tb.sv[00m
+[95m Included './rtl/regs.sv'[00m
+[95m Included './tb/regs_tb.sv'[00m
+[96m iverilog command: iverilog -g2012 -o ./iverilog_output_file -DDETAILS ./rtl/regs.sv ./tb/regs_tb.sv[00m
+VCD info: dumpfile ./vcds/regs_tb.vcd opened for output.
+VCD warning: $dumpvars: Package ($unit) is not dumpable with VCD.
+[[92mOK[00m]Write 92153524 to rd = x[ 0]
+[[92mOK[00m]Write 40895e81 to rd = x[ 1]
+[[92mOK[00m]Write 0484d609 to rd = x[ 2]
+[[92mOK[00m]Write 31f05663 to rd = x[ 3]
+[[92mOK[00m]Write 86b97b0d to rd = x[ 4]
+[[92mOK[00m]Write c6df998d to rd = x[ 5]
+[[92mOK[00m]Write 32c28465 to rd = x[ 6]
+[[92mOK[00m]Write 09375212 to rd = x[ 7]
+[[92mOK[00m]Write 80f3e301 to rd = x[ 8]
+[[92mOK[00m]Write 86d7cd0d to rd = x[ 9]
+[[92mOK[00m]Write bb23f176 to rd = x[10]
+[[92mOK[00m]Write 9e8dcd3d to rd = x[11]
+[[92mOK[00m]Write f6d457ed to rd = x[12]
+[[92mOK[00m]Write c62df78c to rd = x[13]
+[[92mOK[00m]Write fcfde9f9 to rd = x[14]
+[[92mOK[00m]Write 633724c6 to rd = x[15]
+[[92mOK[00m]Write 62f784c5 to rd = x[16]
+[[92mOK[00m]Write 5513d2aa to rd = x[17]
+[[92mOK[00m]Write f2aff7e5 to rd = x[18]
+[[92mOK[00m]Write 3bd27277 to rd = x[19]
+[[92mOK[00m]Write 0932d612 to rd = x[20]
+[[92mOK[00m]Write c7ecdb8f to rd = x[21]
+[[92mOK[00m]Write f93069f2 to rd = x[22]
+[[92mOK[00m]Write 677696ce to rd = x[23]
+[[92mOK[00m]Write 74007ae8 to rd = x[24]
+[[92mOK[00m]Write 62ca4ec5 to rd = x[25]
+[[92mOK[00m]Write ae58495c to rd = x[26]
+[[92mOK[00m]Write 5e8e28bd to rd = x[27]
+[[92mOK[00m]Write 16ab582d to rd = x[28]
+[[92mOK[00m]Write 32a72665 to rd = x[29]
+[[92mOK[00m]Write 31ef6263 to rd = x[30]
+[[92mOK[00m]Write 8573870a to rd = x[31]
+[[92mOK[00m] Read 00000000 from rs1 = x[ 0], expected 00000000
+[[92mOK[00m] Read 40895e81 from rs2 = x[ 1], expected 40895e81
+[[92mOK[00m] Read 0484d609 from rs1 = x[ 2], expected 0484d609
+[[92mOK[00m] Read 31f05663 from rs2 = x[ 3], expected 31f05663
+[[92mOK[00m] Read 86b97b0d from rs1 = x[ 4], expected 86b97b0d
+[[92mOK[00m] Read c6df998d from rs2 = x[ 5], expected c6df998d
+[[92mOK[00m] Read 32c28465 from rs1 = x[ 6], expected 32c28465
+[[92mOK[00m] Read 09375212 from rs2 = x[ 7], expected 09375212
+[[92mOK[00m] Read 80f3e301 from rs1 = x[ 8], expected 80f3e301
+[[92mOK[00m] Read 86d7cd0d from rs2 = x[ 9], expected 86d7cd0d
+[[92mOK[00m] Read bb23f176 from rs1 = x[10], expected bb23f176
+[[92mOK[00m] Read 9e8dcd3d from rs2 = x[11], expected 9e8dcd3d
+[[92mOK[00m] Read f6d457ed from rs1 = x[12], expected f6d457ed
+[[92mOK[00m] Read c62df78c from rs2 = x[13], expected c62df78c
+[[92mOK[00m] Read fcfde9f9 from rs1 = x[14], expected fcfde9f9
+[[92mOK[00m] Read 633724c6 from rs2 = x[15], expected 633724c6
+[[92mOK[00m] Read 62f784c5 from rs1 = x[16], expected 62f784c5
+[[92mOK[00m] Read 5513d2aa from rs2 = x[17], expected 5513d2aa
+[[92mOK[00m] Read f2aff7e5 from rs1 = x[18], expected f2aff7e5
+[[92mOK[00m] Read 3bd27277 from rs2 = x[19], expected 3bd27277
+[[92mOK[00m] Read 0932d612 from rs1 = x[20], expected 0932d612
+[[92mOK[00m] Read c7ecdb8f from rs2 = x[21], expected c7ecdb8f
+[[92mOK[00m] Read f93069f2 from rs1 = x[22], expected f93069f2
+[[92mOK[00m] Read 677696ce from rs2 = x[23], expected 677696ce
+[[92mOK[00m] Read 74007ae8 from rs1 = x[24], expected 74007ae8
+[[92mOK[00m] Read 62ca4ec5 from rs2 = x[25], expected 62ca4ec5
+[[92mOK[00m] Read ae58495c from rs1 = x[26], expected ae58495c
+[[92mOK[00m] Read 5e8e28bd from rs2 = x[27], expected 5e8e28bd
+[[92mOK[00m] Read 16ab582d from rs1 = x[28], expected 16ab582d
+[[92mOK[00m] Read 32a72665 from rs2 = x[29], expected 32a72665
+[[92mOK[00m] Read 31ef6263 from rs1 = x[30], expected 31ef6263
+[[92mOK[00m] Read 8573870a from rs2 = x[31], expected 8573870a
+[[92mOK[00m] DONE AUTO TESTING, SCORE: 48/48 (FAILED: 0)
+./tb/regs_tb.sv:39: $finish called at 627000 (1ps)
+[92m COMPILED SUCCESSFULLY![00m

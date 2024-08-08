@@ -1,0 +1,1160 @@
+[94m Auto compile verilog script[00m
+[96m by Dao Quyet[00m
+[93m Defines list:[00m
+[93m DETAILS[00m
+[93m INIT_MEM[00m
+[95m File arguments list:[00m
+[95m rtl/decode.sv[00m
+[95m rtl/fetch.sv[00m
+[95m rtl/main_memory.sv[00m
+[95m rtl/regs.sv[00m
+[95m rtl/forward.sv[00m
+[95m rtl/execute.sv[00m
+[95m rtl/memory.sv[00m
+[95m tb/memory_tb.sv[00m
+[95m Included './rtl/decode.sv'[00m
+[95m Included './rtl/fetch.sv'[00m
+[95m Included './rtl/main_memory.sv'[00m
+[95m Included './rtl/regs.sv'[00m
+[95m Included './rtl/forward.sv'[00m
+[95m Included './rtl/execute.sv'[00m
+[95m Included './rtl/memory.sv'[00m
+[95m Included './tb/memory_tb.sv'[00m
+[96m iverilog command: iverilog -g2012 -o ./iverilog_output_file -DDETAILS -DINIT_MEM ./rtl/decode.sv ./rtl/fetch.sv ./rtl/main_memory.sv ./rtl/regs.sv ./rtl/forward.sv ./rtl/execute.sv ./rtl/memory.sv ./tb/memory_tb.sv[00m
+Init Memory from ./hexs/lb.hex
+VCD info: dumpfile ./vcds/memory_tb.vcd opened for output.
+VCD warning: $dumpvars: Package ($unit) is not dumpable with VCD.
+[94m>>> Reset released...[00m
+x[ 1] =          0
+x[ 2] =          0
+x[ 3] =          0
+x[ 4] =          0
+x[ 5] =          0
+x[ 6] =          0
+x[ 7] =          0
+x[ 8] =          0
+x[ 9] =          0
+x[10] =          0
+x[11] =          0
+x[12] =          0
+x[13] =          0
+x[14] =          0
+x[15] =          0
+x[16] =          0
+x[17] =          0
+x[18] =          0
+x[19] =          0
+x[20] =          0
+x[21] =          0
+x[22] =          0
+x[23] =          0
+x[24] =          0
+x[25] =          0
+x[26] =          0
+x[27] =          0
+x[28] =          0
+x[29] =          0
+x[30] =          0
+x[31] =          0
+[[92mFETCH [00m] fetch_pc  = [96m   0[00m, instr_fetch  = [96m07400093[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[91mDECODE[00m] decode_pc = [96m   0[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m   0[00m, execute_instr = [96m07400093[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   x[00m, memory_instr = [96mxxxxxxxx[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m   0[00m, instr_fetch  = [96m07400093[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m   0[00m, decode_instr = [96m07400093[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m   0[00m, execute_instr = [96m07400093[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   x[00m, memory_instr = [96mxxxxxxxx[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m   4[00m, instr_fetch  = [96m00808093[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m   0[00m, decode_instr = [96m07400093[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x1, x0, 116
+[[92mEXECUTE[00m] execute_pc = [96m   0[00m, execute_instr = [96m07400093[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 116, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   x[00m, memory_instr = [96mxxxxxxxx[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m   8[00m, instr_fetch  = [96m00008103[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m   4[00m, decode_instr = [96m00808093[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x1, x1, 8
+[[92mEXECUTE[00m] execute_pc = [96m   0[00m, execute_instr = [96m07400093[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 116, next op_b = 8, curr result = 116
+[[92mMEMORY[00m] memory_pc = [96m   x[00m, memory_instr = [96mxxxxxxxx[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  12[00m, instr_fetch  = [96m00b08183[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m   8[00m, decode_instr = [96m00008103[00m
+[92mLOAD[00m
+[92mLB[00m x2, 0(x1)
+[[92mEXECUTE[00m] execute_pc = [96m   4[00m, execute_instr = [96m00808093[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 124
+[[92mMEMORY[00m] memory_pc = [96m   0[00m, memory_instr = [96m07400093[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  16[00m, instr_fetch  = [96mffa08203[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 1, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  12[00m, decode_instr = [96m00b08183[00m
+[92mLOAD[00m
+[92mLB[00m x3, 11(x1)
+[[92mEXECUTE[00m] execute_pc = [96m   8[00m, execute_instr = [96m00008103[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 124, next op_b = 11, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   4[00m, memory_instr = [96m00808093[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  16[00m, instr_fetch  = [96mffa08203[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 1, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  12[00m, decode_instr = [96mffa08203[00m
+[92mLOAD[00m
+[92mLB[00m x3, 11(x1)
+[[92mEXECUTE[00m] execute_pc = [96m   8[00m, execute_instr = [96m00008103[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 124, next op_b = 11, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   4[00m, memory_instr = [96m00808093[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  16[00m, instr_fetch  = [96mffa08203[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  12[00m, decode_instr = [96mffa08203[00m
+[92mLOAD[00m
+[92mLB[00m x3, 11(x1)
+[[92mEXECUTE[00m] execute_pc = [96m   8[00m, execute_instr = [96m00008103[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 124, next op_b = 11, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   4[00m, memory_instr = [96m00808093[00m
+[94mREAD WORD DATA 'h07400093 FROM MEMORY[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  20[00m, instr_fetch  = [96m07700293[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 1, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  16[00m, decode_instr = [96mffa08203[00m
+[92mLOAD[00m
+[92mLB[00m x4, -6(x1)
+[[92mEXECUTE[00m] execute_pc = [96m  12[00m, execute_instr = [96m00b08183[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 124, next op_b = -6, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   8[00m, memory_instr = [96m00008103[00m
+[93mACTUAL DATA 'hffffff93 CONVERTED FROM WORD DATA 'h07400093[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  20[00m, instr_fetch  = [96m07700293[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 1, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  16[00m, decode_instr = [96m07700293[00m
+[92mLOAD[00m
+[92mLB[00m x4, -6(x1)
+[[92mEXECUTE[00m] execute_pc = [96m  12[00m, execute_instr = [96m00b08183[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 124, next op_b = -6, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   8[00m, memory_instr = [96m00008103[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  20[00m, instr_fetch  = [96m07700293[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  16[00m, decode_instr = [96m07700293[00m
+[92mLOAD[00m
+[92mLB[00m x4, -6(x1)
+[[92mEXECUTE[00m] execute_pc = [96m  12[00m, execute_instr = [96m00b08183[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 124, next op_b = -6, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m   8[00m, memory_instr = [96m00008103[00m
+[94mREAD WORD DATA 'h07400093 FROM MEMORY[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  24[00m, instr_fetch  = [96m02028663[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 1, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  20[00m, decode_instr = [96m07700293[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x5, x0, 119
+[[92mEXECUTE[00m] execute_pc = [96m  16[00m, execute_instr = [96mffa08203[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 0, next op_b = 119, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m  12[00m, memory_instr = [96m00b08183[00m
+[93mACTUAL DATA 'hffffff93 CONVERTED FROM WORD DATA 'h07400093[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  24[00m, instr_fetch  = [96m02028663[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 1, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  20[00m, decode_instr = [96m02028663[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x5, x0, 119
+[[92mEXECUTE[00m] execute_pc = [96m  16[00m, execute_instr = [96mffa08203[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 0, next op_b = 119, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m  12[00m, memory_instr = [96m00b08183[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  24[00m, instr_fetch  = [96m02028663[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  20[00m, decode_instr = [96m02028663[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x5, x0, 119
+[[92mEXECUTE[00m] execute_pc = [96m  16[00m, execute_instr = [96mffa08203[00m
+[92mLOAD[00m
+[92mALU[00m: next op_a = 0, next op_b = 119, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m  12[00m, memory_instr = [96m00b08183[00m
+[94mREAD WORD DATA 'h07400093 FROM MEMORY[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  28[00m, instr_fetch  = [96mfab00313[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 1, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  24[00m, decode_instr = [96m02028663[00m
+[92mBRANCH[00m
+[92mBEQ[00m x5, x0, 44
+[[92mEXECUTE[00m] execute_pc = [96m  20[00m, execute_instr = [96m07700293[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 119
+[[92mMEMORY[00m] memory_pc = [96m  16[00m, memory_instr = [96mffa08203[00m
+[93mACTUAL DATA 'hffffff93 CONVERTED FROM WORD DATA 'h07400093[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  32[00m, instr_fetch  = [96m02030263[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc = [96m  28[00m, decode_instr = [96mfab00313[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x6, x0, -85
+[[92mEXECUTE[00m] execute_pc = [96m  24[00m, execute_instr = [96m02028663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = -85, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m  20[00m, memory_instr = [96m07700293[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  32[00m, instr_fetch  = [96m02030263[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc = [96m  28[00m, decode_instr = [96m02030263[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x6, x0, -85
+[[92mEXECUTE[00m] execute_pc = [96m  24[00m, execute_instr = [96m02028663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = -85, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m  24[00m, memory_instr = [96m02028663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  68[00m, instr_fetch  = [96m00100513[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc = [96m  28[00m, decode_instr = [96m02030263[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x6, x0, -85
+[[92mEXECUTE[00m] execute_pc = [96m  24[00m, execute_instr = [96m02028663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = -85, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m  24[00m, memory_instr = [96m02028663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  68[00m, instr_fetch  = [96m00100513[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  28[00m, decode_instr = [96m00100513[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x6, x0, -85
+[[92mEXECUTE[00m] execute_pc = [96m  24[00m, execute_instr = [96m02028663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = -85, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m  24[00m, memory_instr = [96m02028663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  72[00m, instr_fetch  = [96m05d00893[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  68[00m, decode_instr = [96m00100513[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x10, x0, 1
+[[92mEXECUTE[00m] execute_pc = [96m  24[00m, execute_instr = [96m02028663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = 1, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m  24[00m, memory_instr = [96m02028663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  76[00m, instr_fetch  = [96m00100073[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  72[00m, decode_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x17, x0, 93
+[[92mEXECUTE[00m] execute_pc = [96m  68[00m, execute_instr = [96m00100513[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 93, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m  24[00m, memory_instr = [96m02028663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  80[00m, instr_fetch  = [96m00200513[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  76[00m, decode_instr = [96m00100073[00m
+[92mSYSTEM[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m  72[00m, execute_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 1, curr result = 93
+[[92mMEMORY[00m] memory_pc = [96m  68[00m, memory_instr = [96m00100513[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  84[00m, instr_fetch  = [96m05d00893[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  80[00m, decode_instr = [96m00200513[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x10, x0, 2
+[[92mEXECUTE[00m] execute_pc = [96m  76[00m, execute_instr = [96m00100073[00m
+[92mSYSTEM[00m
+[92mALU[00m: next op_a = 0, next op_b = 2, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m  72[00m, memory_instr = [96m05d00893[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  88[00m, instr_fetch  = [96m00100073[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  84[00m, decode_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x17, x0, 93
+[[92mEXECUTE[00m] execute_pc = [96m  80[00m, execute_instr = [96m00200513[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 93, curr result = 2
+[[92mMEMORY[00m] memory_pc = [96m  76[00m, memory_instr = [96m00100073[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  92[00m, instr_fetch  = [96m00400513[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  88[00m, decode_instr = [96m00100073[00m
+[92mSYSTEM[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m  84[00m, execute_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 1, curr result = 93
+[[92mMEMORY[00m] memory_pc = [96m  80[00m, memory_instr = [96m00200513[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m  96[00m, instr_fetch  = [96m05d00893[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  92[00m, decode_instr = [96m00400513[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x10, x0, 4
+[[92mEXECUTE[00m] execute_pc = [96m  88[00m, execute_instr = [96m00100073[00m
+[92mSYSTEM[00m
+[92mALU[00m: next op_a = 0, next op_b = 4, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m  84[00m, memory_instr = [96m05d00893[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 100[00m, instr_fetch  = [96m00100073[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m  96[00m, decode_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x17, x0, 93
+[[92mEXECUTE[00m] execute_pc = [96m  92[00m, execute_instr = [96m00400513[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 93, curr result = 4
+[[92mMEMORY[00m] memory_pc = [96m  88[00m, memory_instr = [96m00100073[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 104[00m, instr_fetch  = [96m00600513[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m 100[00m, decode_instr = [96m00100073[00m
+[92mSYSTEM[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m  96[00m, execute_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 1, curr result = 93
+[[92mMEMORY[00m] memory_pc = [96m  92[00m, memory_instr = [96m00400513[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 108[00m, instr_fetch  = [96m05d00893[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m 104[00m, decode_instr = [96m00600513[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x10, x0, 6
+[[92mEXECUTE[00m] execute_pc = [96m 100[00m, execute_instr = [96m00100073[00m
+[92mSYSTEM[00m
+[92mALU[00m: next op_a = 0, next op_b = 6, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m  96[00m, memory_instr = [96m05d00893[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 112[00m, instr_fetch  = [96m00100073[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m 108[00m, decode_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mADD[00m[92mI[00m x17, x0, 93
+[[92mEXECUTE[00m] execute_pc = [96m 104[00m, execute_instr = [96m00600513[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 93, curr result = 6
+[[92mMEMORY[00m] memory_pc = [96m 100[00m, memory_instr = [96m00100073[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 116[00m, instr_fetch  = [96m12345678[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m 112[00m, decode_instr = [96m00100073[00m
+[92mSYSTEM[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 108[00m, execute_instr = [96m05d00893[00m
+[92mITYPE[00m
+[92mALU[00m: next op_a = 0, next op_b = 1, curr result = 93
+[[92mMEMORY[00m] memory_pc = [96m 104[00m, memory_instr = [96m00600513[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 120[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 116[00m, decode_instr = [96m12345678[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 112[00m, execute_instr = [96m00100073[00m
+[92mSYSTEM[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 108[00m, memory_instr = [96m05d00893[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 124[00m, instr_fetch  = [96m11335577[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 120[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 116[00m, execute_instr = [96m12345678[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 112[00m, memory_instr = [96m00100073[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 128[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 124[00m, decode_instr = [96m11335577[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 120[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 116[00m, memory_instr = [96m12345678[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 132[00m, instr_fetch  = [96mabcdef19[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 128[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 124[00m, execute_instr = [96m11335577[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 120[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 136[00m, instr_fetch  = [96m00001941[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 132[00m, decode_instr = [96mabcdef19[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 128[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 124[00m, memory_instr = [96m11335577[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 140[00m, instr_fetch  = [96m73697200[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 136[00m, decode_instr = [96m00001941[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 132[00m, execute_instr = [96mabcdef19[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 128[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 144[00m, instr_fetch  = [96m01007663[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 140[00m, decode_instr = [96m73697200[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 136[00m, execute_instr = [96m00001941[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 132[00m, memory_instr = [96mabcdef19[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 148[00m, instr_fetch  = [96m0000000f[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 1, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m 144[00m, decode_instr = [96m01007663[00m
+[92mBRANCH[00m
+[92mBGEU[00m x0, x16, 12
+[[92mEXECUTE[00m] execute_pc = [96m 140[00m, execute_instr = [96m73697200[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 136[00m, memory_instr = [96m00001941[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 152[00m, instr_fetch  = [96m33767205[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc = [96m 148[00m, decode_instr = [96m0000000f[00m
+[92mFENCE[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 144[00m, execute_instr = [96m01007663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m 140[00m, memory_instr = [96m73697200[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 152[00m, instr_fetch  = [96m33767205[00m[95m >>> [Info] stall_bit = 1, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc = [96m 148[00m, decode_instr = [96m33767205[00m
+[92mFENCE[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 144[00m, execute_instr = [96m01007663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m 144[00m, memory_instr = [96m01007663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 156[00m, instr_fetch  = [96m70326932[00m[95m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 0[00m
+[[92mDECODE[00m] decode_pc = [96m 148[00m, decode_instr = [96m33767205[00m
+[92mFENCE[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 144[00m, execute_instr = [96m01007663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m 144[00m, memory_instr = [96m01007663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 156[00m, instr_fetch  = [96m70326932[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[92mDECODE[00m] decode_pc = [96m 148[00m, decode_instr = [96m70326932[00m
+[92mFENCE[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 144[00m, execute_instr = [96m01007663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m 144[00m, memory_instr = [96m01007663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 160[00m, instr_fetch  = [96m00000031[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 156[00m, decode_instr = [96m70326932[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 144[00m, execute_instr = [96m01007663[00m
+[92mBRANCH[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 1
+[[92mMEMORY[00m] memory_pc = [96m 144[00m, memory_instr = [96m01007663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 164[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 160[00m, decode_instr = [96m00000031[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 156[00m, execute_instr = [96m70326932[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 144[00m, memory_instr = [96m01007663[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 168[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 164[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 160[00m, execute_instr = [96m00000031[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 156[00m, memory_instr = [96m70326932[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 172[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 168[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 164[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 160[00m, memory_instr = [96m00000031[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 176[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 172[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 168[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 164[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 180[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 176[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 172[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 168[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 184[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 180[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 176[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 172[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 188[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 184[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 180[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 176[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 192[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 188[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 184[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 180[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 196[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 192[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 188[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 184[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 200[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 196[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 192[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 188[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 204[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 200[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 196[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 192[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 208[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 204[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 200[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 196[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 212[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 208[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 204[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 200[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 216[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 212[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 208[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 204[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 220[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 216[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 212[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 208[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 224[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 220[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 216[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 212[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 228[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 224[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 220[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 216[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 232[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 228[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 224[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 220[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 236[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 232[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 228[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 224[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 240[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 236[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 232[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 228[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 244[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 240[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 236[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 232[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 248[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 244[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 240[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 236[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 252[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 248[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 244[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 240[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 256[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 252[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 248[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 244[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 260[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 256[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 252[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 248[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 264[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 260[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 256[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 252[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 268[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 264[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 260[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 256[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 272[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 268[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 264[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 260[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 276[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 272[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 268[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 264[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 280[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 276[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 272[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 268[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 284[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 280[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 276[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 272[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 288[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 284[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 280[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 276[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 292[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 288[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 284[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 280[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 296[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 292[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 288[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 284[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 300[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 296[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 292[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 288[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 304[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 300[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 296[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 292[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 308[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 304[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 300[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 296[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 312[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 308[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 304[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 300[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 316[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 312[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 308[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 304[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 320[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 316[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 312[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 308[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 324[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 320[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 316[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 312[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 328[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 324[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 320[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 316[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 332[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 328[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 324[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 320[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 336[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 332[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 328[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 324[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 340[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 336[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 332[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 328[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 344[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 340[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 336[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 332[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 348[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 344[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 340[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 336[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 352[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 348[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 344[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 340[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 356[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 352[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 348[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 344[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 360[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 356[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 352[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 348[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 364[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 360[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 356[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 352[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 368[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 364[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 360[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 356[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 372[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 368[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 364[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 360[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 376[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 372[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 368[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 364[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 380[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 376[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 372[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 368[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+[[92mFETCH [00m] fetch_pc  = [96m 384[00m, instr_fetch  = [96m00000000[00m[00m >>> [Info] stall_bit = 0, stall_fetch = 0, decode_flush = 0, decode_clk_en = 1[00m
+[[91mDECODE[00m] decode_pc = [96m 380[00m, decode_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+???
+[[92mEXECUTE[00m] execute_pc = [96m 376[00m, execute_instr = [96m00000000[00m
+[91mILLEGAL (NO TYPE DECODED)[00m
+[92mALU[00m: next op_a = 0, next op_b = 0, curr result = 0
+[[92mMEMORY[00m] memory_pc = [96m 372[00m, memory_instr = [96m00000000[00m
+[90mNOTHING INTERESTING HAPPENDED[00m
+
+
+./tb/memory_tb.sv:115: $finish called at 1016000 (1ps)
+[92m COMPILED SUCCESSFULLY![00m
