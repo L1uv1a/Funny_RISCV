@@ -7,7 +7,6 @@ module writeback (
     input [`OPCODE_WIDTH-1:0] memory_opcode_type, //! opcode type from previous stage (memory). Extract load or system opcode type to determine if this stage need to handle the instruction
 
     // region CRS Register operation
-    // TODO: do something with this signal when done with the ZICSR's CSR register
     input [31:0] csr_data,  //! CSR data to be loaded to base reg (ZICSR extension)
     // endregion CRS Register operation
 
@@ -27,7 +26,10 @@ module writeback (
     // endregion PC control
 
     // region Trap handler
-    // TODO: handle trap situations
+    input wire        go_to_trap,        // trap (exception/interrupt detected)
+    input wire        return_from_trap,  // high before returning from trap (via mret)
+    input wire [31:0] return_addr,       // mepc CSR
+    input wire [31:0] trap_addr,         // mtvec CSR
     // endregion Trap handler
 
 
@@ -51,10 +53,25 @@ module writeback (
     writeback_pc         = memory_pc;
     writeback_change_pc  = 0;
 
-    // handling operations need writeback
-    if (opcode_load) writeback_rd_wr_data = memory_data_load;  // load data from memory to base reg
-    else if (opcode_system && (memory_funct3 != 0)) writeback_rd_wr_data = csr_data;  // load csr data to base reg
-    else writeback_rd_wr_data = memory_rd_wr_data;  // rd value computed at execute stage
+    // Go to trap
+    if (go_to_trap) begin
+      writeback_change_pc = 1;
+      writeback_pc        = trap_addr;  // interrupt or exception detected so go to trap address (mtvec value)
+      next_flush          = clk_en;
+      writeback_rd_wr_en  = 0;
+      // Return from trap
+    end else if (return_from_trap) begin
+      writeback_change_pc = 1;
+      writeback_pc        = return_addr;  // return from trap via mret (mepc value)
+      next_flush          = clk_en;
+      writeback_rd_wr_en  = 0;
+      // Else
+    end else begin
+      // handling operations need writeback
+      if (opcode_load) writeback_rd_wr_data = memory_data_load;  // load data from memory to base reg
+      else if (opcode_system && (memory_funct3 != 0)) writeback_rd_wr_data = csr_data;  // load csr data to base reg
+      else writeback_rd_wr_data = memory_rd_wr_data;  // rd value computed at execute stage
+    end
   end
 
 

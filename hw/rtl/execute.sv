@@ -21,8 +21,8 @@ module execute (
     input      [31:0] decode_imm,
     output reg [11:0] execute_imm,
 
-    input      [31:0] decode_funct3,
-    output reg [31:0] execute_funct3,
+    input      [2:0] decode_funct3,
+    output reg [2:0] execute_funct3,
 
     input      [`OPCODE_WIDTH-1:0] decode_opcode_type,
     output reg [`OPCODE_WIDTH-1:0] execute_opcode_type,
@@ -36,7 +36,7 @@ module execute (
     input      [31:0] decode_pc,         // pc
     output reg [31:0] execute_pc,        // pc in pipeline
     output reg [31:0] execute_next_pc,   // new pc
-    output reg [31:0] execute_change_pc, // need to jump
+    output reg        execute_change_pc, // need to jump
     // endregion PC control
 
     // region base registers control
@@ -46,7 +46,7 @@ module execute (
     // endregion base registers control
 
     // region Pipeline control
-    output reg stall_from_execute, // stall next stage ([STAGE 4 MEMORY] for load/store instructions)
+    output reg stall_from_execute,  // stall next stage ([STAGE 4 MEMORY] for load/store instructions)
     input clk_en,  // control by previous stage ([STAGE 2 DECODE])
     output reg next_clk_en,  // clk enable for pipeline stalling of next state ([STAGE 4 MEMORY])
     input stall,  // stall this stage
@@ -173,11 +173,11 @@ module execute (
 
   always_comb begin : compute_result
     result = 0;
-    op_a = (opcode_jal || opcode_auipc) ?  // Operand A can either be PC or RS1
-    decode_pc : forward_rs1_data;
+    op_a   = (opcode_jal || opcode_auipc) ?  // Operand A can either be PC or RS1
+ decode_pc : forward_rs1_data;
 
-    op_b = (opcode_rtype || opcode_branch) ?  // Operand B can either be RS2 or Imm
-    forward_rs2_data : decode_imm;
+    op_b   = (opcode_rtype || opcode_branch) ?  // Operand B can either be RS2 or Imm
+ forward_rs2_data : decode_imm;
 
     if (alu_add) result = result_add;
     if (alu_sub) result = result_sub;

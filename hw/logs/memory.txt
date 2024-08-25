@@ -1156,5 +1156,5 @@ x[31] =          0
 [90mNOTHING INTERESTING HAPPENDED[00m
 
 
-./tb/memory_tb.sv:115: $finish called at 1016000 (1ps)
+./tb/memory_tb.sv:117: $finish called at 1016000 (1ps)
 [92m COMPILED SUCCESSFULLY![00m

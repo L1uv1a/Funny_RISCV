@@ -207,10 +207,10 @@ module main_memory #(
   assign wb_stall = 0;  // never stall wb
 
   initial begin
-    instr_ack  <= 0;
-    wb_ack     <= 0;
-    instr      <= 0;
-    wb_rd_data <= 0;
+    instr_ack  = 0;
+    wb_ack     = 0;
+    instr      = 0;
+    wb_rd_data = 0;
     if (MEMORY_HEX != "") begin
       $readmemh(MEMORY_HEX, memory);
       $display("Init Memory from %s", MEMORY_HEX);

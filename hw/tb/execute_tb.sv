@@ -1,6 +1,9 @@
 `timescale 1ns / 1ps
 
 `define VCD_FILE "./vcds/execute_tb.vcd"
+`include "decode_header.vh"
+`include "rv32i_header.vh"
+
 `define ICARUS_SIM
 // `define INIT_MEM
 
