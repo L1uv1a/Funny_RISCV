@@ -5,12 +5,9 @@
 
 //complete package containing the rv32i_core, RAM, and IO peripherals (I2C and UART)
 module soc #(
-    parameter CLK_FREQ_MHZ = 12,
-    PC_RESET = 32'h00_00_00_00,
-    TRAP_ADDRESS = 32'h00_00_00_00,
-    ZICSR_EXTENSION = 1,
-    MEMORY_DEPTH = 81920,
-    GPIO_COUNT = 12
+    parameter PC_RESET = 32'h00_00_00_00,
+    parameter TRAP_ADDRESS = 32'h00_00_00_00,
+    parameter MEMORY_DEPTH = 81920
 ) (
     input wire i_clk,
     input wire i_rst
@@ -20,40 +17,39 @@ module soc #(
   //Instruction Memory Interface
   wire [31:0] inst;
   wire [31:0] iaddr;
-  wire i_stb_inst;
-  wire o_ack_inst;
+  wire        i_stb_inst;
+  wire        o_ack_inst;
 
   //Data Memory Interface
   wire [31:0] i_wb_data_data;  //data retrieved from memory
   wire [31:0] o_wb_data_data;  //data to be stored to memory
   wire [31:0] wb_addr_data;  //address of data memory for store/load
-  wire [3:0] wb_sel_data;  //byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
-  wire wb_we_data;  //write-enable (1 = write, 0 = read) 
-  wire wb_stb_data;  //request for read/write access to data memory
-  wire wb_ack_data; //ack by data memory (high when data to be read is ready or when write data is already written
-  wire wb_cyc_data; //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-  wire wb_stall_data;  //stall by data memory
+  wire [ 3:0] wb_sel_data;  //byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
+  wire        wb_we_data;  //write-enable (1 = write, 0 = read) 
+  wire        wb_stb_data;  //request for read/write access to data memory
+  wire        wb_ack_data;  //ack by data memory (high when data to be read is ready or when write data is already written
+  wire        wb_cyc_data;  //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
+  wire        wb_stall_data;  //stall by data memory
 
   //Interrupts
-  wire i_external_interrupt = 0;  //interrupt from external source
-  wire o_timer_interrupt;  //interrupt from CLINT
-  wire o_software_interrupt;  //interrupt from CLINT
+  wire        i_external_interrupt = 0;  //interrupt from external source
+  wire        o_timer_interrupt;  //interrupt from CLINT
+  wire        o_software_interrupt;  //interrupt from CLINT
 
   //Memory Wrapper
-  wire device0_wb_cyc;
-  wire device0_wb_stb;
-  wire device0_wb_we;
+  wire        device0_wb_cyc;
+  wire        device0_wb_stb;
+  wire        device0_wb_we;
   wire [31:0] device0_wb_addr;
   wire [31:0] o_device0_wb_data;
-  wire [3:0] device0_wb_sel;
-  wire device0_wb_ack;
-  wire device0_wb_stall;
+  wire [ 3:0] device0_wb_sel;
+  wire        device0_wb_ack;
+  wire        device0_wb_stall;
   wire [31:0] i_device0_wb_data;
 
   core #(
-      .PC_RESET       (PC_RESET),
-      .TRAP_ADDRESS   (TRAP_ADDRESS),
-      .ZICSR_EXTENSION(ZICSR_EXTENSION)
+      .PC_RESET    (PC_RESET),
+      .TRAP_ADDRESS(TRAP_ADDRESS)
   ) core_inst (  //main RV32I core
       .i_clk  (i_clk),
       .i_rst_n(!i_rst),

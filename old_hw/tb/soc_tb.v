@@ -55,18 +55,16 @@
 // `define MEMORY "./hexs/xori.hex"
 
 module soc_tb;
-    parameter ZICSR_EXTENSION = 1;
-    /******************************* MODIFY ****************************************/
-    localparam MEMORY_DEPTH = 81920, //number of memory bytes
-               DATA_START_ADDR = 32'h1004; //starting address of data memory to be displayed
-    /*******************************************************************************/
+    // parameter ZICSR_EXTENSION = 1;
+    localparam MEMORY_DEPTH    = 81920;    //number of memory bytes
+    localparam DATA_START_ADDR = 32'h1004; //starting address of data memory to be displayed
    
     reg clk,rst_n;
     reg temp;
     integer i,j;          
     
     
-    soc #(.PC_RESET(32'h00_00_00_00), .MEMORY_DEPTH(MEMORY_DEPTH), .CLK_FREQ_MHZ(100), .TRAP_ADDRESS(32'h00000004), .ZICSR_EXTENSION(ZICSR_EXTENSION)) uut (
+    soc #(.PC_RESET(32'h00_00_00_00), .MEMORY_DEPTH(MEMORY_DEPTH), .TRAP_ADDRESS(32'h00000004)) uut (
         .i_clk(clk),
         .i_rst(!rst_n)
         );
@@ -127,11 +125,11 @@ module soc_tb;
             
             @(negedge clk);
             `ifdef DISPLAY
-            if(ZICSR_EXTENSION != 0) begin
+            // if(ZICSR_EXTENSION != 0) begin
                 if(!uut.core_inst.stall_memoryaccess && uut.core_inst.zicsr.m6.csr_enable) begin //csr is written
                     $display("\nPC: %h    %h [%s]\n  [CSR] address:0x%0h   value:0x%h ",uut.core_inst.zicsr.m6.i_pc, uut.main_memory_inst.memory_regfile[{uut.core_inst.zicsr.m6.i_pc}>>2],"SYSTEM",uut.core_inst.zicsr.m6.i_csr_index,uut.core_inst.zicsr.m6.csr_in); //display address of csr changed and its new value
                 end
-            end
+            // end
             
             if(uut.core_inst.writeback_ce && !uut.core_inst.stall_writeback) begin
                     $display("time = %0t", $time);
@@ -149,7 +147,7 @@ module soc_tb;
                     else $display("\nPC: %h    %h [%s]", uut.core_inst.m5.prev_pc, uut.main_memory_inst.memory_regfile[{uut.core_inst.m5.prev_pc}>>2],"UNKNOWN INSTRUCTION"); //Display PC and instruction 
                     
                 #1;
-                if(ZICSR_EXTENSION != 0) begin
+                // if(ZICSR_EXTENSION != 0) begin
                      if(uut.core_inst.csr_go_to_trap) begin //exception or interrupt detected
                         case({uut.core_inst.zicsr.m6.mcause_intbit,uut.core_inst.zicsr.m6.mcause_code})
                             {1'b1,4'd3}: $display("  GO TO TRAP: %s","SOFTWARE INTERRUPT");
@@ -164,7 +162,7 @@ module soc_tb;
                                 default: $display("  GO TO TRAP: %s","UNKNOWN TRAP");
                         endcase
                      end
-                 end
+                //  end
                  if(uut.main_memory_inst.i_wb_we) begin //data memory is written
                     $display("  [MEMORY] address:0x%h   value:0x%h [MASK:%b]",uut.main_memory_inst.i_wb_addr,uut.main_memory_inst.i_wb_data,uut.main_memory_inst.i_wb_sel); //display address of memory changed and its new value
                 end
@@ -202,7 +200,7 @@ module soc_tb;
         end
        
         /***********************************************************************/
-        if(ZICSR_EXTENSION != 0) begin
+        // if(ZICSR_EXTENSION != 0) begin
             if(uut.core_inst.m0.x[17] == 32'h5d) begin //Exit test using RISC-V International's riscv-tests pass/fail criteria
                 if(uut.core_inst.m0.x[10] == 0)
                     $display("\n\033[92mPASS\033[00m: exit code = 0x%h \n[%0d instructions in %0d clk cycles]\n",uut.core_inst.m0.x[10]>>1,uut.core_inst.zicsr.m6.minstret,uut.core_inst.zicsr.m6.mcycle);
@@ -211,17 +209,17 @@ module soc_tb;
                 end
             end
             else $display("\nUNKNOWN: basereg[17] = 0x%h (must be 0x0000005d)",uut.core_inst.m0.x[17]);
-        end
-        else begin
-            if(uut.core_inst.m0.x[17] == 32'h5d) begin //Exit test using RISC-V International's riscv-tests pass/fail criteria
-                if(uut.core_inst.m0.x[10] == 0)
-                    $display("\n\033[92mPASS\033[00m: exit code = 0x%h\n",uut.core_inst.m0.x[10]>>1);
-                else begin
-                    $display("\n\033[91mFAIL\033[00m: exit code = 0x%h\n",uut.core_inst.m0.x[10]>>1);
-                end
-            end
-            else $display("\nUNKNOWN: basereg[17] = 0x%h (must be 0x0000005d)",uut.core_inst.m0.x[17]);
-        end
+        // end
+        // else begin
+        //     if(uut.core_inst.m0.x[17] == 32'h5d) begin //Exit test using RISC-V International's riscv-tests pass/fail criteria
+        //         if(uut.core_inst.m0.x[10] == 0)
+        //             $display("\n\033[92mPASS\033[00m: exit code = 0x%h\n",uut.core_inst.m0.x[10]>>1);
+        //         else begin
+        //             $display("\n\033[91mFAIL\033[00m: exit code = 0x%h\n",uut.core_inst.m0.x[10]>>1);
+        //         end
+        //     end
+        //     else $display("\nUNKNOWN: basereg[17] = 0x%h (must be 0x0000005d)",uut.core_inst.m0.x[17]);
+        // end
         $finish;
         
         /**************************************************************************************************************************/

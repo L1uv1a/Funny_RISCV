@@ -47,8 +47,7 @@ sub-modules that carry out various functions within the processor:
 
 module core #(
     parameter PC_RESET = 32'h00_00_00_00,
-    TRAP_ADDRESS = 0,
-    ZICSR_EXTENSION = 1
+    parameter TRAP_ADDRESS = 0
 ) (
     input wire i_clk,
     i_rst_n,
@@ -78,11 +77,7 @@ module core #(
     input  wire        i_timer_interrupt      //interrupt from timer
 );
 
-
-  //wires for basereg
-  wire [31:0] rs1_orig, rs2_orig;
-  wire [31:0] rs1, rs2;
-  wire ce_read;
+  localparam ZICSR_EXTENSION = 1;
 
   //wires for rv32i_fetch
   wire [31:0] fetch_pc;
@@ -155,27 +150,10 @@ module core #(
   wire stall_writeback;  //control stall of each pipeline stages
   assign ce_read = decoder_ce && !stall_decoder;  //reads basereg only decoder is not stalled 
 
-  //module instantiations
-  forward forward_inst (  //logic for operand forwarding
-      .rs1_rdata(rs1_orig),  //current rs1 value saved in basereg
-      .rs2_rdata(rs2_orig),  //current rs2 value saved in basereg
-      .rs1(decoder_rs1_addr_q),  //address of operand rs1 used in ALU stage
-      .rs2(decoder_rs2_addr_q),  //address of operand rs2 used in ALU stage
-      .alu_force_stall(alu_force_stall),  //high to force ALU stage to stall
-      .fwd_rs1_rdata(rs1),  //rs1 value with Operand Forwarding
-      .fwd_rs2_rdata(rs2),  //rs2 value with Operand Forwarding
-      // Stage 4 [MEMORYACCESS]
-      .alu_rd(alu_rd_addr),  //destination register address
-      .alu_rd_w_en(alu_wr_rd),  //high if rd_addr will be written
-      .alu_rd_valid(alu_rd_valid),  //high if rd is already valid at this stage (not LOAD nor CSR instruction)
-      .alu_rd_data(alu_rd),  //rd value in stage 4
-      .mem_en(memoryaccess_ce),  //high if stage 4 is enabled
-      // Stage 5 [WRITEBACK]
-      .mem_rd(memoryaccess_rd_addr),  //destination register address
-      .mem_rd_w_en(memoryaccess_wr_rd),  //high if rd_addr will be written
-      .writeback_rd_data(writeback_rd),  //rd value in stage 5
-      .writeback_en(writeback_ce)  //high if stage 4 is enabled
-  );
+  //wires for basereg
+  wire [31:0] rs1_orig, rs2_orig;
+  wire [31:0] rs1, rs2;
+  wire ce_read;
 
   regs m0 (  //regfile controller for the 32 integer base registers
       .clk(i_clk),
@@ -189,8 +167,10 @@ module core #(
       .w_en(writeback_wr_rd),  //write enable
 
       .rs1_rdata(rs1_orig),  //source register 1 value
-      .rs2_rdata(rs2_orig)  //source register 2 value
+      .rs2_rdata(rs2_orig)   //source register 2 value
   );
+
+
 
   fetch #(
       .PC_RESET(PC_RESET)
@@ -215,11 +195,14 @@ module core #(
   );
 
   instr_de m2 (  //logic for the decoding of the 32 bit instruction [DECODE STAGE , STAGE 2]
-      .clk(i_clk),
+      .clk (i_clk),
       .rstn(i_rst_n),
-      .instr(fetch_inst),  //32 bit instruction
-      .prev_pc(fetch_pc),  //PC value from fetch stage
+
+      .instr  (fetch_inst),  //32 bit instruction
+      .prev_pc(fetch_pc),    //PC value from fetch stage
+
       .pc(decoder_pc),  //PC value
+
       .rs1(decoder_rs1_addr),  // address for register source 1
       .r_rs1(decoder_rs1_addr_q),  // registered address for register source 1
       .rs2(decoder_rs2_addr),  // address for register source 2
@@ -227,9 +210,11 @@ module core #(
       .rd(decoder_rd_addr),  // address for destination register
       .imm(decoder_imm),  // extended value for immediate
       .funct3(decoder_funct3),  // function type
+
       .alu_operation(decoder_alu),  //alu operation type
       .opcode_type(decoder_opcode),  //opcode type
       .exception(decoder_exception),  //exceptions: illegal inst, ecall, ebreak, mret
+
       /// Pipeline Control ///
       .prev_clk_en(decoder_ce),  // input clk enable for pipeline stalling of this stage
       .clk_en(alu_ce),  // output clk enable for pipeline stalling of next stage
@@ -345,6 +330,28 @@ module core #(
       .prev_clk_en(writeback_ce),  // input clk enable for pipeline stalling of this stage
       .stall(stall_writeback),  //informs pipeline to stall
       .flush(writeback_flush)  //flushes previous stages 
+  );
+
+  //module instantiations
+  forward forward_inst (  //logic for operand forwarding
+      .rs1_rdata(rs1_orig),  //current rs1 value saved in basereg
+      .rs2_rdata(rs2_orig),  //current rs2 value saved in basereg
+      .rs1(decoder_rs1_addr_q),  //address of operand rs1 used in ALU stage
+      .rs2(decoder_rs2_addr_q),  //address of operand rs2 used in ALU stage
+      .alu_force_stall(alu_force_stall),  //high to force ALU stage to stall
+      .fwd_rs1_rdata(rs1),  //rs1 value with Operand Forwarding
+      .fwd_rs2_rdata(rs2),  //rs2 value with Operand Forwarding
+      // Stage 4 [MEMORYACCESS]
+      .alu_rd(alu_rd_addr),  //destination register address
+      .alu_rd_w_en(alu_wr_rd),  //high if rd_addr will be written
+      .alu_rd_valid(alu_rd_valid),  //high if rd is already valid at this stage (not LOAD nor CSR instruction)
+      .alu_rd_data(alu_rd),  //rd value in stage 4
+      .mem_en(memoryaccess_ce),  //high if stage 4 is enabled
+      // Stage 5 [WRITEBACK]
+      .mem_rd(memoryaccess_rd_addr),  //destination register address
+      .mem_rd_w_en(memoryaccess_wr_rd),  //high if rd_addr will be written
+      .writeback_rd_data(writeback_rd),  //rd value in stage 5
+      .writeback_en(writeback_ce)  //high if stage 4 is enabled
   );
 
   // removable extensions
