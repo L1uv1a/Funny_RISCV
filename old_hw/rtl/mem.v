@@ -30,7 +30,7 @@ should be performed on the data memory.
  conditions.
 */
 
-`include "rv32i_header.vh"
+`include "../rv32i_header.vh"
 
 module mem (
     input wire clk,
@@ -87,6 +87,16 @@ module mem (
   wire [1:0] addr_2 = alu_result[1:0];  //last 2  bits of data memory address
 
   wire stall_bit = (prev_stall || stall);
+
+   wire [ 7:0] wb_data_data_byte0 = wb_rdata_data[(0+1)*8-1:0*8];  // byte0
+  wire [ 7:0] wb_data_data_byte1 = wb_rdata_data[(1+1)*8-1:1*8];  // byte1
+  wire [ 7:0] wb_data_data_byte2 = wb_rdata_data[(2+1)*8-1:2*8];  // byte2
+  wire [ 7:0] wb_data_data_byte3 = wb_rdata_data[(3+1)*8-1:3*8];  // byte3
+
+  wire [15:0] wb_data_data_half0 = wb_rdata_data[(0+1)*16-1:0*16];  // half0
+  wire [15:0] wb_data_data_half1 = wb_rdata_data[(1+1)*16-1:1*16];  // half1
+
+  wire [31:0] wb_data_data_word = wb_rdata_data;  // word
 
   //register the outputs of this module
   always @(posedge clk, negedge rstn) begin
@@ -146,15 +156,7 @@ module mem (
 
   end
 
-  wire [ 7:0] wb_data_data_byte0 = wb_rdata_data[(0+1)*8-1:0*8];  // byte0
-  wire [ 7:0] wb_data_data_byte1 = wb_rdata_data[(1+1)*8-1:1*8];  // byte1
-  wire [ 7:0] wb_data_data_byte2 = wb_rdata_data[(2+1)*8-1:2*8];  // byte2
-  wire [ 7:0] wb_data_data_byte3 = wb_rdata_data[(3+1)*8-1:3*8];  // byte3
 
-  wire [15:0] wb_data_data_half0 = wb_rdata_data[(0+1)*16-1:0*16];  // half0
-  wire [15:0] wb_data_data_half1 = wb_rdata_data[(1+1)*16-1:1*16];  // half1
-
-  wire [31:0] wb_data_data_word = wb_rdata_data;  // word
 
   //determine data to be loaded to basereg or stored to data memory
   always @* begin
