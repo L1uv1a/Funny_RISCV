@@ -1,7 +1,7 @@
 /* decodes the 32 bit instruction [DECODE STAGE]
 */
 
-`include "rv32i_header.vh"
+`include "../rv32i_header.vh"
 
 module instr_de (
     input wire clk,
@@ -90,6 +90,44 @@ module instr_de (
   wire illegal_shift = (opcode_itype_d && (alu_sll_d || alu_srl_d || alu_sra_d)) && instr[25];
 
   wire stall_bit = (prev_stall || stall);  // stall this stage when next stages are stalled
+
+      // region Imm extraction
+  wire [31:0] imm_i = {
+    {`ITYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
+    instr[`ITYPE_IMM_RANGE]  // Imm extraction
+  };
+
+
+  wire [31:0] imm_s = {
+    {`STYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
+    instr[`STYPE_IMM_RANGE_11_5],  // Imm extraction
+    instr[`STYPE_IMM_RANGE_4_0]
+  };
+
+  wire [31:0] imm_b = {
+    {`BTYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
+    instr[`BTYPE_IMM_RANGE_12],  // Imm extraction
+    instr[`BTYPE_IMM_RANGE_11],
+    instr[`BTYPE_IMM_RANGE_10_5],
+    instr[`BTYPE_IMM_RANGE_4_1],
+    {`BTYPE_IMM_ZERO_FILL_BITS{1'b0}}  // zero fill
+  };
+
+  wire [31:0] imm_j = {
+    {`JTYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
+    instr[`JTYPE_IMM_RANGE_20],  // Imm extraction
+    instr[`JTYPE_IMM_RANGE_19_12],
+    instr[`JTYPE_IMM_RANGE_11],
+    instr[`JTYPE_IMM_RANGE_10_1],
+    {`JTYPE_IMM_ZERO_FILL_BITS{1'b0}}  // zero fill
+  };
+
+  wire [31:0] imm_u = {
+    instr[`UTYPE_IMM_RANGE],  // Imm extraction
+    {`UTYPE_IMM_ZERO_FILL_BITS{1'b0}}  // zero fill
+  };
+
+  wire [31:0] imm_x = {{`XTYPE_IMM_ZERO_FILL_BITS{1'b0}}, instr[`XTYPE_IMM_RANGE]};
 
   // region update stage registers
   //register the outputs of this decoder module for shorter combinational timing paths
@@ -223,43 +261,7 @@ module instr_de (
   end
   // region Imm decode
 
-  // region Imm extraction
-  wire [31:0] imm_i = {
-    {`ITYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
-    instr[`ITYPE_IMM_RANGE]  // Imm extraction
-  };
 
-
-  wire [31:0] imm_s = {
-    {`STYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
-    instr[`STYPE_IMM_RANGE_11_5],  // Imm extraction
-    instr[`STYPE_IMM_RANGE_4_0]
-  };
-
-  wire [31:0] imm_b = {
-    {`BTYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
-    instr[`BTYPE_IMM_RANGE_12],  // Imm extraction
-    instr[`BTYPE_IMM_RANGE_11],
-    instr[`BTYPE_IMM_RANGE_10_5],
-    instr[`BTYPE_IMM_RANGE_4_1],
-    {`BTYPE_IMM_ZERO_FILL_BITS{1'b0}}  // zero fill
-  };
-
-  wire [31:0] imm_j = {
-    {`JTYPE_IMM_SIGN_EXPAND_BITS{instr[`IMM_SIGN_BIT]}},  // Sign expand
-    instr[`JTYPE_IMM_RANGE_20],  // Imm extraction
-    instr[`JTYPE_IMM_RANGE_19_12],
-    instr[`JTYPE_IMM_RANGE_11],
-    instr[`JTYPE_IMM_RANGE_10_1],
-    {`JTYPE_IMM_ZERO_FILL_BITS{1'b0}}  // zero fill
-  };
-
-  wire [31:0] imm_u = {
-    instr[`UTYPE_IMM_RANGE],  // Imm extraction
-    {`UTYPE_IMM_ZERO_FILL_BITS{1'b0}}  // zero fill
-  };
-
-  wire [31:0] imm_x = {{`XTYPE_IMM_ZERO_FILL_BITS{1'b0}}, instr[`XTYPE_IMM_RANGE]};
   // endregion Imm extraction
 
 endmodule
