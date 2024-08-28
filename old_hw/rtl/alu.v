@@ -104,6 +104,21 @@ module alu (
   wire [31:0] pc_plus_4 = prev_pc + 4;
   // endregion alu registered values
 
+      wire [31:0] result_add = op_a + op_b;
+  wire [31:0] result_sub = op_a - op_b;
+  wire [31:0] result_xor = op_a ^ op_b;
+  wire [31:0] result_or = op_a | op_b;
+  wire [31:0] result_slt = ($signed(op_a) < $signed(op_b));
+  wire [31:0] result_sltu = (op_a < op_b);
+  wire [31:0] result_and = (op_a & op_b);
+  wire [31:0] result_sll = (op_a << op_b[4:0]);
+  wire [31:0] result_srl = (op_a >> op_b[4:0]);
+  wire [31:0] result_sra = ($signed(op_a) >>> op_b[4:0]);
+  wire [31:0] result_eq = (op_a == op_b);
+  wire [31:0] result_neq = (op_a != op_b);
+  wire [31:0] result_ge = ($signed(op_a) >= $signed(op_b));
+  wire [31:0] result_geu = (op_a >= op_b);
+
   wire        stall_bit = (prev_stall || stall);  // stall this stage when next stages are stalled
 
   // registered alu stage registers
@@ -172,20 +187,7 @@ module alu (
     if (alu_geu) result = result_geu;
   end
 
-  wire [31:0] result_add = op_a + op_b;
-  wire [31:0] result_sub = op_a - op_b;
-  wire [31:0] result_xor = op_a ^ op_b;
-  wire [31:0] result_or = op_a | op_b;
-  wire [31:0] result_slt = ($signed(op_a) < $signed(op_b));
-  wire [31:0] result_sltu = (op_a < op_b);
-  wire [31:0] result_and = (op_a & op_b);
-  wire [31:0] result_sll = (op_a << op_b[4:0]);
-  wire [31:0] result_srl = (op_a >> op_b[4:0]);
-  wire [31:0] result_sra = ($signed(op_a) >>> op_b[4:0]);
-  wire [31:0] result_eq = (op_a == op_b);
-  wire [31:0] result_neq = (op_a != op_b);
-  wire [31:0] result_ge = ($signed(op_a) >= $signed(op_b));
-  wire [31:0] result_geu = (op_a >= op_b);
+
 
   // determine rd to be saved to base register and next value of PC
   always @* begin
