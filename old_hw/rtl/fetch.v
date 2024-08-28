@@ -47,6 +47,18 @@ module fetch #(
 
   // clk enable logic for fetch stage
   wire disable_next_stage = ((alu_change_pc || writeback_change_pc) && !(stall || stall_fetch));
+
+      // pc and pipeline clk enable control logic
+  reg [31:0] r_instr_addr;
+
+      /* Update registers conditions
+  update registers only if this stage is enable and next stages are not stalled
+  */
+  wire enable_update_registers = ((!stall_bit && r_clk_en) ||  //
+  (stall_bit && !clk_en && r_clk_en) ||  //
+  (writeback_change_pc)  //
+  );
+    
   always @(posedge clk, negedge rstn) begin
     if (!rstn) r_clk_en <= 0;
     // do pipeline bubble when need to change pc so that next stage will be disable
@@ -55,13 +67,7 @@ module fetch #(
       r_clk_en <= !disable_next_stage;
   end
 
-  /* Update registers conditions
-  update registers only if this stage is enable and next stages are not stalled
-  */
-  wire enable_update_registers = ((!stall_bit && r_clk_en) ||  //
-  (stall_bit && !clk_en && r_clk_en) ||  //
-  (writeback_change_pc)  //
-  );
+
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
@@ -98,8 +104,7 @@ module fetch #(
   end
 
 
-  // pc and pipeline clk enable control logic
-  reg [31:0] r_instr_addr;
+
 
   always @* begin
     r_instr_addr = 0;
