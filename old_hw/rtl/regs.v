@@ -1,4 +1,4 @@
-`include "rv32i_header.vh"
+`include "../rv32i_header.vh"
 
 /* regfile controller for the 32 integer base registers
 */
