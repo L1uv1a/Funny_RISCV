@@ -1,4 +1,4 @@
-`include "../rv32i_header.vh"
+`include "rv32i_header.vh"
 
 module forward (
     // current read data of rs1 and rs1 from regs

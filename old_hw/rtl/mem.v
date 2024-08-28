@@ -30,7 +30,7 @@ should be performed on the data memory.
  conditions.
 */
 
-`include "../rv32i_header.vh"
+`include "rv32i_header.vh"
 
 module mem (
     input wire clk,

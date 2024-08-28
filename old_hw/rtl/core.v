@@ -148,12 +148,13 @@ module core #(
   wire stall_alu;
   wire stall_memoryaccess;
   wire stall_writeback;  //control stall of each pipeline stages
+  wire ce_read;
   assign ce_read = decoder_ce && !stall_decoder;  //reads basereg only decoder is not stalled 
 
   //wires for basereg
   wire [31:0] rs1_orig, rs2_orig;
   wire [31:0] rs1, rs2;
-  wire ce_read;
+
 
   regs m0 (  //regfile controller for the 32 integer base registers
       .clk(i_clk),

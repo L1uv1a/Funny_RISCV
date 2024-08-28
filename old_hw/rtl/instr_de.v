@@ -1,7 +1,8 @@
 /* decodes the 32 bit instruction [DECODE STAGE]
 */
 
-`include "../rv32i_header.vh"
+`include "rv32i_header.vh"
+`include "decode_header.vh"
 
 module instr_de (
     input wire clk,
