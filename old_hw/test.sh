@@ -1,0 +1,1 @@
+compile_verilog rtl/*.v tb/soc_tb.v

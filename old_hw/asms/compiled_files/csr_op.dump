@@ -1,0 +1,99 @@
+
+asms/compiled_files/csr_op.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <_start>:
+   0:	06400093          	li	ra,100
+   4:	0c800113          	li	sp,200
+   8:	100001b7          	lui	gp,0x10000
+   c:	30511273          	csrrw	tp,mtvec,sp
+  10:	3051a2f3          	csrrs	t0,mtvec,gp
+  14:	30513373          	csrrc	t1,mtvec,sp
+  18:	305ad3f3          	csrrwi	t2,mtvec,21
+  1c:	30556473          	csrrsi	s0,mtvec,10
+  20:	305874f3          	csrrci	s1,mtvec,16
+  24:	305025f3          	csrr	a1,mtvec
+  28:	04010a63          	beqz	sp,7c <fail0>
+  2c:	04229e63          	bne	t0,sp,88 <fail1>
+  30:	10000637          	lui	a2,0x10000
+  34:	0c860613          	addi	a2,a2,200 # 100000c8 <end+0xfffffd1>
+  38:	04060263          	beqz	a2,7c <fail0>
+  3c:	04c31c63          	bne	t1,a2,94 <fail2>
+  40:	10000637          	lui	a2,0x10000
+  44:	02060c63          	beqz	a2,7c <fail0>
+  48:	04761c63          	bne	a2,t2,a0 <fail3>
+  4c:	01500613          	li	a2,21
+  50:	02060663          	beqz	a2,7c <fail0>
+  54:	04861c63          	bne	a2,s0,ac <fail4>
+  58:	01f00613          	li	a2,31
+  5c:	02060063          	beqz	a2,7c <fail0>
+  60:	04961c63          	bne	a2,s1,b8 <fail5>
+  64:	00f00613          	li	a2,15
+  68:	00060a63          	beqz	a2,7c <fail0>
+  6c:	04b61c63          	bne	a2,a1,c4 <fail6>
+
+00000070 <pass>:
+  70:	00000513          	li	a0,0
+  74:	05d00893          	li	a7,93
+  78:	00100073          	ebreak
+
+0000007c <fail0>:
+  7c:	00100513          	li	a0,1
+  80:	05d00893          	li	a7,93
+  84:	00100073          	ebreak
+
+00000088 <fail1>:
+  88:	00200513          	li	a0,2
+  8c:	05d00893          	li	a7,93
+  90:	00100073          	ebreak
+
+00000094 <fail2>:
+  94:	00400513          	li	a0,4
+  98:	05d00893          	li	a7,93
+  9c:	00100073          	ebreak
+
+000000a0 <fail3>:
+  a0:	00600513          	li	a0,6
+  a4:	05d00893          	li	a7,93
+  a8:	00100073          	ebreak
+
+000000ac <fail4>:
+  ac:	00800513          	li	a0,8
+  b0:	05d00893          	li	a7,93
+  b4:	00100073          	ebreak
+
+000000b8 <fail5>:
+  b8:	00a00513          	li	a0,10
+  bc:	05d00893          	li	a7,93
+  c0:	00100073          	ebreak
+
+000000c4 <fail6>:
+  c4:	00c00513          	li	a0,12
+  c8:	05d00893          	li	a7,93
+  cc:	00100073          	ebreak
+
+000000d0 <data>:
+  d0:	2641                	.insn	2, 0x2641
+  d2:	0000                	.insn	2, 0x
+  d4:	7200                	.insn	2, 0x7200
+  d6:	7369                	.insn	2, 0x7369
+  d8:	01007663          	bgeu	zero,a6,e4 <data+0x14>
+  dc:	001c                	.insn	2, 0x001c
+  de:	0000                	.insn	2, 0x
+  e0:	7205                	.insn	2, 0x7205
+  e2:	3376                	.insn	2, 0x3376
+  e4:	6932                	.insn	2, 0x6932
+  e6:	7032                	.insn	2, 0x7032
+  e8:	5f31                	.insn	2, 0x5f31
+  ea:	697a                	.insn	2, 0x697a
+  ec:	32727363          	bgeu	tp,t2,412 <end+0x31b>
+  f0:	3070                	.insn	2, 0x3070
+  f2:	0800                	.insn	2, 0x0800
+  f4:	0a01                	.insn	2, 0x0a01
+  f6:	Address 0xf6 is out of bounds.
+
+
+000000f7 <end>:
+	...

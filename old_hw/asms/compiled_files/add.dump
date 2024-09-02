@@ -1,0 +1,73 @@
+
+asms/compiled_files/add.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <_start>:
+   0:	06400093          	li	ra,100
+   4:	09600113          	li	sp,150
+   8:	002081b3          	add	gp,ra,sp
+   c:	f6a00213          	li	tp,-150
+  10:	001202b3          	add	t0,tp,ra
+  14:	00220333          	add	t1,tp,sp
+  18:	00208033          	add	zero,ra,sp
+  1c:	0fa00393          	li	t2,250
+  20:	02038463          	beqz	t2,48 <fail0>
+  24:	fce00413          	li	s0,-50
+  28:	02040063          	beqz	s0,48 <fail0>
+  2c:	02339463          	bne	t2,gp,54 <fail1>
+  30:	02541863          	bne	s0,t0,60 <fail2>
+  34:	02601c63          	bne	zero,t1,6c <fail3>
+  38:	04001063          	bnez	zero,78 <fail4>
+
+0000003c <pass>:
+  3c:	00000513          	li	a0,0
+  40:	05d00893          	li	a7,93
+  44:	00100073          	ebreak
+
+00000048 <fail0>:
+  48:	00100513          	li	a0,1
+  4c:	05d00893          	li	a7,93
+  50:	00100073          	ebreak
+
+00000054 <fail1>:
+  54:	00200513          	li	a0,2
+  58:	05d00893          	li	a7,93
+  5c:	00100073          	ebreak
+
+00000060 <fail2>:
+  60:	00400513          	li	a0,4
+  64:	05d00893          	li	a7,93
+  68:	00100073          	ebreak
+
+0000006c <fail3>:
+  6c:	00600513          	li	a0,6
+  70:	05d00893          	li	a7,93
+  74:	00100073          	ebreak
+
+00000078 <fail4>:
+  78:	00800513          	li	a0,8
+  7c:	05d00893          	li	a7,93
+  80:	00100073          	ebreak
+
+00000084 <data>:
+  84:	2241                	.insn	2, 0x2241
+  86:	0000                	.insn	2, 0x
+  88:	7200                	.insn	2, 0x7200
+  8a:	7369                	.insn	2, 0x7369
+  8c:	01007663          	bgeu	zero,a6,98 <data+0x14>
+  90:	0018                	.insn	2, 0x0018
+  92:	0000                	.insn	2, 0x
+  94:	7205                	.insn	2, 0x7205
+  96:	3376                	.insn	2, 0x3376
+  98:	6932                	.insn	2, 0x6932
+  9a:	7032                	.insn	2, 0x7032
+  9c:	5f31                	.insn	2, 0x5f31
+  9e:	697a                	.insn	2, 0x697a
+  a0:	32727363          	bgeu	tp,t2,3c6 <end+0x31f>
+  a4:	3070                	.insn	2, 0x3070
+	...
+
+000000a7 <end>:
+	...

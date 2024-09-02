@@ -1,0 +1,29 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+mem              0x00000000         0x00000400
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.memory         0x00000000       0xa8
+                0x00000000                        . = 0x0
+ *(.text)
+ .text          0x00000000       0x84 asms/compiled_files/add.o
+                0x00000000                _start
+                0x00000000                main
+ *(*)
+ .data          0x00000084        0x0 asms/compiled_files/add.o
+ .bss           0x00000084        0x0 asms/compiled_files/add.o
+ .riscv.attributes
+                0x00000084       0x23 asms/compiled_files/add.o
+                0x000000a7                        end = .
+                0x000000a8                        . = ALIGN (0x4)
+ *fill*         0x000000a7        0x1 
+LOAD asms/compiled_files/add.o
+LOAD /opt/homebrew/Cellar/riscv-gnu-toolchain/main/lib/gcc/riscv64-unknown-elf/13.2.0/rv32i/ilp32/libgcc.a
+OUTPUT(asms/compiled_files/add.elf elf32-littleriscv)

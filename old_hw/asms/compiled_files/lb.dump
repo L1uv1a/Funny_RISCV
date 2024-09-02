@@ -1,0 +1,29 @@
+
+./compiled_files/lb.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <end-0x2f>:
+   0:	00008103          	lb	sp,0(ra)
+   4:	00b08183          	lb	gp,11(ra)
+   8:	ffa08203          	lb	tp,-6(ra)
+   c:	2241                	.insn	2, 0x2241
+   e:	0000                	.insn	2, 0x
+  10:	7200                	.insn	2, 0x7200
+  12:	7369                	.insn	2, 0x7369
+  14:	01007663          	bgeu	zero,a6,20 <end-0xf>
+  18:	0018                	.insn	2, 0x0018
+  1a:	0000                	.insn	2, 0x
+  1c:	7205                	.insn	2, 0x7205
+  1e:	3376                	.insn	2, 0x3376
+  20:	6932                	.insn	2, 0x6932
+  22:	7032                	.insn	2, 0x7032
+  24:	5f31                	.insn	2, 0x5f31
+  26:	697a                	.insn	2, 0x697a
+  28:	32727363          	bgeu	tp,t2,34e <end+0x31f>
+  2c:	3070                	.insn	2, 0x3070
+	...
+
+0000002f <end>:
+	...
