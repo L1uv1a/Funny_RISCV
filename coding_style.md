@@ -52,7 +52,7 @@ always_comb begin
     // case list here
   endcase
 end
-... // other block here
+... // other blocks here
 ```
 Messed order:
 ```
@@ -66,7 +66,7 @@ always_comb begin
     // case list here
   endcase
 end
-... // other block here
+... // other blocks here
 logic        adder_op_a_shift1;
 logic        adder_op_a_shift2;
 
@@ -90,5 +90,5 @@ always_comb begin
     // case list here
   endcase
 end
-... // other block here
+... // other blocks here
 ```
