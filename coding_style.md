@@ -92,3 +92,34 @@ always_comb begin
 end
 ... // other blocks here
 ```
+## Data type, width and names should stay in the same column:
+This is ok:
+```
+  //wires for rv32i_decoder
+  wire [`ALU_WIDTH-1:0]       decoder_alu;
+  wire [`OPCODE_WIDTH-1:0]    decoder_opcode;
+  wire [31:0]                 decoder_pc;
+  wire [4:0]                  decoder_rs1_addr, decoder_rs2_addr;
+  wire [4:0]                  decoder_rs1_addr_q, decoder_rs2_addr_q;
+  wire [4:0]                  decoder_rd_addr;
+  wire [31:0]                 decoder_imm;
+  wire [2:0]                  decoder_funct3;
+  wire [`EXCEPTION_WIDTH-1:0] decoder_exception;
+  wire                        decoder_ce;
+  wire                        decoder_flush;
+```
+This is wrong format:
+```
+  //wires for rv32i_decoder
+  wire [`ALU_WIDTH-1:0] decoder_alu;
+  wire [`OPCODE_WIDTH-1:0] decoder_opcode;
+  wire [31:0] decoder_pc;
+  wire [4:0] decoder_rs1_addr, decoder_rs2_addr;
+  wire [4:0] decoder_rs1_addr_q, decoder_rs2_addr_q;
+  wire [4:0] decoder_rd_addr;
+  wire [31:0] decoder_imm;
+  wire [2:0] decoder_funct3;
+  wire [`EXCEPTION_WIDTH-1:0] decoder_exception;
+  wire decoder_ce;
+  wire decoder_flush;
+```
