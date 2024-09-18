@@ -3,29 +3,29 @@
 module fetch #(
     parameter PC_RESET = 0
 ) (
-    input clk,                                                                              
-    input rstn,                                                                              
+  input clk,                                                                              
+  input rstn,                                                                              
 
-    output reg [31:0] pc,                 // PC value of current instruction
-    output reg [31:0] instr_send,         // instruction sent to pipeline
+  output reg   [31:0] pc,                 // PC value of current instruction
+  output reg   [31:0] instr_send,         // instruction sent to pipeline
 
-    output logic        instr_req_o,      // req
-    input  logic        instr_gnt_i,      // gnt
-    output logic [31:0] instr_addr_o,     // addr
-    input  logic [31:0] instr_rdata_i,    // rdata
-    input  logic        instr_err_i,      // err    // fix NO USE
-    input  logic        instr_rvalid_i,   // valid  // fix NO USE
+  output logic        instr_req_o,      // req
+  input  logic        instr_gnt_i,      // gnt
+  output logic [31:0] instr_addr_o,     // addr
+  input  logic [31:0] instr_rdata_i,    // rdata
+  input  logic        instr_err_i,      // err    // fix NO USE
+  input  logic        instr_rvalid_i,   // valid  // fix NO USE
 
-    // PC control
-    input        writeback_change_pc,     // high when pc needs to change (trap/return from trap)
-    input [31:0] writeback_next_pc,       // next PC due to trap
-    input        alu_change_pc,           // high when pc needs to change (branch/jump)
-    input [31:0] alu_next_pc,             // next PC due to branch/jump
+  // PC control
+  input        writeback_change_pc,     // high when pc needs to change (trap/return from trap)
+  input [31:0] writeback_next_pc,       // next PC due to trap
+  input        alu_change_pc,           // high when pc needs to change (branch/jump)
+  input [31:0] alu_next_pc,             // next PC due to branch/jump
 
-    // Pipeline control
-    output reg clk_en,                    // output clk enable for pipeline stalling of next state
-    input      stall,                     // stall logic for whole pipeline
-    input      flush                      // flush this stage
+  // Pipeline control
+  output reg clk_en,                    // output clk enable for pipeline stalling of next state
+  input      stall,                     // stall logic for whole pipeline
+  input      flush                      // flush this stage
 );
 
   wire        instr_req;   // request for instruction
