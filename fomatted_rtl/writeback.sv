@@ -31,7 +31,7 @@ stages. Key functionalities of the rv32i_writeback module include:
 //logic controller for the next PC and rd value [WRITEBACK STAGE]
 
 `timescale 1ns / 1ps
-`include "rv32i_header.vh"
+`include "rv32i_header.svh"
 
 module writeback (
     input wire [ 2:0]           funct3,        //function type 

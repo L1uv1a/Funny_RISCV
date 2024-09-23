@@ -1,4 +1,4 @@
-`include "rv32i_header.vh"
+`include "rv32i_header.svh"
 
 module alu (
   input wire clk,

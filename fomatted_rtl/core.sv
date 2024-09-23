@@ -44,7 +44,7 @@ sub-modules that carry out various functions within the processor:
 
 `timescale 1ns / 1ps
 // `default_nettype none
-`include "rv32i_header.vh"
+`include "rv32i_header.svh"
 
 module core #(
     parameter PC_RESET     = 32'h00_00_00_00,
@@ -61,7 +61,7 @@ module core #(
 
   // Data Memory Interface (32 bit ram)
   // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-  output wire        o_wb_cyc_data,
+  //output wire        o_wb_cyc_data,
   output wire        o_wb_stb_data,         // request for read/write access to data memory
   output wire        o_wb_we,          // write-enable (1 = write, 0 = read)
   output wire [31:0] o_wb_addr_data,        // address of data memory for store/load
@@ -70,7 +70,7 @@ module core #(
   output wire [ 3:0] o_wb_sel_data,
   // ack by data memory (high when read data is ready or when write data is already written)
   input  wire        i_wb_ack,
-  input  wire        i_wb_stall,       // stall by data memory
+  //input  wire        i_wb_stall,       // stall by data memory
   input  wire [31:0] i_wb_data_data,        // data retrieve from memory
   // Interrupts
   input  wire        i_external_interrupt,  // interrupt from external source
@@ -190,10 +190,12 @@ module core #(
       .pc                 (fetch_pc),             // PC value of o_instr
       .instr_send         (fetch_instr),          // instrruction
 
-      .instr_addr         (o_iaddr),              // instrruction address
-      .instr_mem          (i_instr),              // retrieved instrruction from Memory
-      .instr_req          (o_stb_instr),          // request for instrruction
-      .instr_ack          (i_ack_instr),          // ack (high if new instrruction is ready)
+      .instr_addr_o(o_iaddr),     //Instruction address
+      .instr_rdata_i(i_instr),      // retrieved instruction from Memory
+      .instr_req_o(o_stb_instr),  // request for instruction
+      .instr_gnt_i(i_ack_instr),  //ack (high if new instruction is ready)
+      .instr_err_i(1'b0),    // err    // fix NO USE
+      .instr_rvalid_i(1'b0), // ack (high if new instrruction is ready)
 
       // PC Control
       .writeback_change_pc(writeback_change_pc),  // high when PC needs to change when going to trap or returning from trap
@@ -210,34 +212,35 @@ module core #(
   /////////////////////
   // decode instance //
   /////////////////////
-  instrr_de m2 (  
+  instr_de m2 (  
       // logic for decode stage [STAGE 2]
       .clk              (i_clk),                                                                              
       .rstn             (i_rst_n),                                                                              
 
-      .instrr           (fetch_instr),                                          // 32 bit instrruction
-      .prev_pc          (fetch_pc),                                             // PC value from fetch stage
+      .fetch_instr_i           (fetch_instr),                                          // 32 bit instrruction
+      .fetch_pc_i          (fetch_pc),                                             // PC value from fetch stage
 
-      .pc               (decoder_pc),                                           // PC value
+      .decode_pc_o              (decoder_pc),                                           // PC value
 
-      .rs1              (decoder_rs1_addr),                                     // address for register source 1
-      .r_rs1            (decoder_rs1_addr_q),                                   // registered address for register source 1
-      .rs2              (decoder_rs2_addr),                                     // address for register source 2
-      .r_rs2            (decoder_rs2_addr_q),                                   // registered address for register source 2
-      .rd               (decoder_rd_addr),                                      // address for destination register
-      .imm              (decoder_imm),                                          // extended value for immediate
-      .funct3           (decoder_funct3),                                       // function type
+      .rf_rs1_addr_o              (decoder_rs1_addr),                                     // address for register source 1
+      .fw_rs1_addr_o            (decoder_rs1_addr_q),                                   // registered address for register source 1
+      .rf_rs2_addr_o              (decoder_rs2_addr),                                     // address for register source 2
+      .fw_rs2_addr_o            (decoder_rs2_addr_q),                                   // registered address for register source 2
+      .decode_rd_addr_o               (decoder_rd_addr),                                      // address for destination register
+      .decode_imm_o              (decoder_imm),                                          // extended value for immediate
+      .decode_funct3_o           (decoder_funct3),                                       // function type
 
-      .opcode_type      (decoder_opcode),                                       // opcode type
-      .exception        (decoder_exception),                                    // exceptions: illegal instr, ecall, ebreak, mret
+      .decode_alu_operation_o               (decoder_alu), 
+      .decode_opcode_type_o      (decoder_opcode),                                       // opcode type
+      .decode_exception_o        (decoder_exception),                                    // exceptions: illegal instr, ecall, ebreak, mret
 
       /// Pipeline Control //
-      .prev_clk_en      (decoder_ce),                                           // input clk enable for pipeline stalling of this stage
-      .clk_en           (alu_ce),                                               // output clk enable for pipeline stalling of next stage
-      .prev_stall       ((stall_alu || stall_memoryaccess || stall_writeback)), // informs this stage to stall
-      .stall            (stall_decoder),                                        // informs pipeline to stall
-      .prev_flush       (alu_flush),                                            // flush this stage
-      .flush            (decoder_flush)                                         // flushes previous stages
+      .decode_en_i      (decoder_ce),                                           // input clk enable for pipeline stalling of this stage
+      .execute_en_o           (alu_ce),                                               // output clk enable for pipeline stalling of next stage
+      .decode_stall_i           ((stall_alu || stall_memoryaccess || stall_writeback)), // informs this stage to stall
+      .decode_pipeline_stall_o           (stall_decoder),                                        // informs pipeline to stall
+      .decode_flush_i      (alu_flush),                                            // flush this stage
+      .decode_pipeline_flush_o            (decoder_flush)                                         // flushes previous stages
   );
   
   //////////////////
@@ -292,40 +295,40 @@ module core #(
       //logic controller for data memory access (load/store) (memory stage) [STAGE 4]
       .clk              (i_clk),                                                                              
       .rstn             (i_rst_n),                                                                              
-      .rs2_wdata        (alu_rs2),                                       // data to be stored to memory is always rs2
-      .alu_result       (alu_y),                                         // y value from ALU (address of data to memory be stored or loaded)
-      .prev_funct3      (alu_funct3),                                    // funct3 from previous stage
-      .funct3           (memoryaccess_funct3),                           // funct3 (byte,halfword,word)
-      .prev_opcode_type (alu_opcode),                                    // opcode type from previous stage
-      .opcode_type      (memoryaccess_opcode),                           // opcode type
-      .prev_pc          (alu_pc),                                        // PC from previous stage
-      .pc               (memoryaccess_pc),                               // PC value
+      .execute_rs2_wdata_i        (alu_rs2),                                       // data to be stored to memory is always rs2
+      .execute_result_i       (alu_y),                                         // y value from ALU (address of data to memory be stored or loaded)
+      .execute_funct3_i      (alu_funct3),                                    // funct3 from previous stage
+      .memory_funct3_o           (memoryaccess_funct3),                           // funct3 (byte,halfword,word)
+      .execute_opcode_type_i (alu_opcode),                                    // opcode type from previous stage
+      .memory_opcode_type_o      (memoryaccess_opcode),                           // opcode type
+      .execute_pc_i          (alu_pc),                                        // PC from previous stage
+      .memory_pc_o               (memoryaccess_pc),                               // PC value
       // Basereg Control
-      .prev_rd_w_en     (alu_wr_rd),                                     // write rd to base reg is enabled (from memoryaccess stage)
-      .rd_w_en          (memoryaccess_wr_rd),                            // write rd to the base reg if enabled
-      .prev_rd          (alu_rd_addr),                                   // address for destination register (from previous stage)
-      .rd               (memoryaccess_rd_addr),                          // address for destination register
-      .prev_rd_wdata    (alu_rd),                                        // value to be written back to destination reg
-      .rd_wdata         (memoryaccess_rd),                               // value to be written back to destination register
+      .execute_rd_write_en_i     (alu_wr_rd),                                     // write rd to base reg is enabled (from memoryaccess stage)
+      .memory_rd_write_en_o          (memoryaccess_wr_rd),                            // write rd to the base reg if enabled
+      .execute_rd_addr_i          (alu_rd_addr),                                   // address for destination register (from previous stage)
+      .memory_rd_addr_o               (memoryaccess_rd_addr),                          // address for destination register
+      .execute_rd_wdata_i    (alu_rd),                                        // value to be written back to destination reg
+      .memory_rd_wdata_o         (memoryaccess_rd),                               // value to be written back to destination register
       // Data Memory Control
-      .memory_bus_cyc_data_o  (o_wb_cyc_data),                                 // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-      .memory_stb_data_o  (o_wb_stb_data),                                 // request for read/write access to data memory
+      //.memory_bus_cyc_data_o  (o_wb_cyc_data),                                 // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
+      .memory_req_o  (o_wb_stb_data),                                 // request for read/write access to data memory
       .memory_we_o  (o_wb_we),                                  // write-enable (1 = write, 0 = read)
-      .memory_addr_data_o  (o_wb_addr_data),                                // data memory address
-      .memory_wdata_data_o  (o_wb_data_data),                                // data to be stored to memory (mask-aligned)
-      .memory_sel_data_o  (o_wb_sel_data),                              // byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
+      .memory_addr_o  (o_wb_addr_data),                                // data memory address
+      .memory_wdata_o  (o_wb_data_data),                                // data to be stored to memory (mask-aligned)
+      .memory_be_o  (o_wb_sel_data),                              // byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
       .memory_ack_i  (i_wb_ack),                                 // ack by data memory (high when read data is ready or when write data is already written
-      .memory_stall_i  (i_wb_stall),                               // stall by data memory (1 = data memory is busy)
+      //.memory_stall_i  (i_wb_stall),                               // stall by data memory (1 = data memory is busy)
       .memory_rdata_i  (i_wb_data_data),                                // data retrieve from data memory 
       .memory_data_load_i        (memoryaccess_data_load),                        // data to be loaded to base reg (z-or-s extended) 
       /// Pipeline Control ///
       .stall_from_alu   (o_stall_from_alu),                              // stalls this stage when incoming instrruction is a load/store
-      .prev_clk_en      (memoryaccess_ce),                               // input clk enable for pipeline stalling of this stage
-      .clk_en           (writeback_ce),                                  // output clk enable for pipeline stalling of next stage
-      .prev_stall       (stall_writeback),                               // informs this stage to stall
-      .stall            (stall_memoryaccess),                            // informs pipeline to stall
-      .prev_flush       (writeback_flush),                               // flush this stage
-      .flush            (memoryaccess_flush)                             // flushes previous stages
+      .memory_en_i      (memoryaccess_ce),                               // input clk enable for pipeline stalling of this stage
+      .writeback_en_o           (writeback_ce),                                  // output clk enable for pipeline stalling of next stage
+      .memory_stall_i       (stall_writeback),                               // informs this stage to stall
+      .memory_pipeline_stall_o            (stall_memoryaccess),                            // informs pipeline to stall
+      .memory_flush_i       (writeback_flush),                               // flush this stage
+      .memory_pipeline_flush_o            (memoryaccess_flush)                             // flushes previous stages
   );
 
   ////////////////////////
@@ -400,7 +403,7 @@ module core #(
         .i_software_interrupt(i_software_interrupt),                     // interrupt from software (inter-processor interrupt)
         .i_timer_interrupt   (i_timer_interrupt),                        // interrupt from timer
         /// Exceptions ///
-        .i_is_instr_illegal   (alu_exception[`ILLEGAL]),                 // illegal instrruction
+        .i_is_inst_illegal   (alu_exception[`ILLEGAL]),                 // illegal instrruction
         .i_is_ecall          (alu_exception[`ECALL]),                    // ecall instrruction
         .i_is_ebreak         (alu_exception[`EBREAK]),                   // ebreak instrruction
         .i_is_mret           (alu_exception[`MRET]),                     // mret (return from trap) instrruction
@@ -420,7 +423,7 @@ module core #(
         .o_trap_address      (csr_trap_address),                         // mtvec CSR
         .o_go_to_trap_q      (csr_go_to_trap),                           // high before going to trap (if exception/interrupt detected)
         .o_return_from_trap_q(csr_return_from_trap),                     // high before returning from trap (via mret)
-        .i_minstrret_inc      (writeback_ce),                            // high for one clock cycle at the end of every instrruction
+        .i_minstret_inc      (writeback_ce),                            // high for one clock cycle at the end of every instrruction
         /// Pipeline Control ///
         .i_ce                (memoryaccess_ce),                          // input clk enable for pipeline stalling of this stage
         .i_stall             ((stall_writeback || stall_memoryaccess))   // informs this stage to stall

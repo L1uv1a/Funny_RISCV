@@ -110,10 +110,10 @@ module instr_de (
       // update registers only if this stage is enabled and pipeline is not stalled
     end else if (decode_en_i && (!stall_bit)) begin
       // capture any necessary registers to hold value between stages of the pipeline process
-      pc                   <= fetch_pc_i;
+      decode_pc_o          <= fetch_pc_i;
       fw_rs1_addr_o        <= rf_rs1_addr_o;
       fw_rs2_addr_o        <= rf_rs2_addr_o;
-      decode_rd_o          <= extracted_rd;
+      decode_rd_addr_o     <= extracted_rd;
       decode_funct3_o      <= funct3_d;
       decode_imm_o         <= imm_d;
 

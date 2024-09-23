@@ -1,7 +1,7 @@
 // control logic for Control and Status Registers (CSR) [ZICSR EXTENSION]
 
 `timescale 1ns / 1ps
-`include "rv32i_header.vh"
+`include "rv32i_header.svh"
 
 module rv32i_csr #(
     parameter TRAP_ADDRESS = 0

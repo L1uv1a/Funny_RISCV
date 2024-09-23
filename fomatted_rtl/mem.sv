@@ -58,7 +58,7 @@ module mem (
 
   // Data Memory Interface
   // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-  output reg         memory_bus_cyc_data_o,             
+  //output reg         memory_bus_cyc_data_o,             
   output reg         memory_req_o,                       // request for read/write access to data memory
   output reg         memory_we_o,                        // write-enable (1 = write, 0 = read)
   output reg  [31:0] memory_addr_o,                      // data memory address
@@ -66,7 +66,7 @@ module mem (
   output reg  [ 3:0] memory_be_o,                        // byte enable for write {byte3, byte2, byte1, byte0}
   // ack by data memory (high when data to be read is ready or when write data is already written)
   input  wire        memory_ack_i,                                                                              
-  input  wire        memory_stall_i,                     // stall by data memory (1 = data memory is busy)
+  //input  wire        memory_stall_i,                     // stall by data memory (1 = data memory is busy)
   input  wire [31:0] memory_rdata_i,                     // data retrieve from data memory
   output reg  [31:0] memory_data_load_i,                 // data to be loaded to base reg (z-or-s extended)
 
@@ -99,10 +99,10 @@ module mem (
       writeback_en_o        <= 0;
       memory_req_o          <= 0;
       pending_request       <= 0;
-      memory_bus_cyc_data_o <= 0;
+      //memory_bus_cyc_data_o <= 0;
     end else begin
       // wishbone cycle will only be high if this stage is enabled
-      memory_bus_cyc_data_o <= memory_en_i;
+      //memory_bus_cyc_data_o <= memory_en_i;
       // request completed after grant
       if (memory_ack_i) begin
         pending_request      <= 0;  // not pending any more
