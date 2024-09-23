@@ -24,12 +24,12 @@ module instr_de (
     output reg [`EXCEPTION_WIDTH-1:0] decode_exception_o,      // illegal instr, ecall, ebreak, mret
 
     // Pipeline control
-    input  wire decode_en_i,  // input clk enable for pipeline stalling of this stage
-    output reg  execute_en_o,       // output clk enable for pipeline stalling of next stage
-    input  wire decode_stall_i,   //informs this stage to stall
-    output reg  decode_pipeline_stall_o,        //informs pipeline to stall
-    input  wire decode_flush_i,   //flush this stage
-    output reg  decode_pipeline_flush_o         //flush previous stages
+    input  wire        decode_en_i,  // input clk enable for pipeline stalling of this stage
+    output reg         execute_en_o,       // output clk enable for pipeline stalling of next stage
+    input  wire        decode_stall_i,   //informs this stage to stall
+    output reg         decode_pipeline_stall_o,        //informs pipeline to stall
+    input  wire        decode_flush_i,   //flush this stage
+    output reg         decode_pipeline_flush_o         //flush previous stages
 );
 
   //rf_rs1_addr_o and rf_rs2_addr_o are not registered since regs module do the registering itself

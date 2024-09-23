@@ -33,51 +33,51 @@ should be performed on the data memory.
 `include "rv32i_header.svh"
 
 module mem (
-    input wire clk,
-    input wire rstn,
+  input  wire clk,
+  input  wire rstn,
 
-    input wire [31:0] execute_rs2_wdata_i,  // data to be stored to memory is always execute_rs2_wdata_i
-    input wire [31:0] execute_result_i, // result from ALU (mem address to load/store)
+  input  wire [31:0] execute_rs2_wdata_i,                // data to be stored to memory is always execute_rs2_wdata_i
+  input  wire [31:0] execute_result_i,                   // result from ALU (mem address to load/store)
 
-    input  wire [2:0] execute_funct3_i,  //funct3 from previous stage
-    output reg  [2:0] memory_funct3_o,       //memory_funct3_o (byte,halfword,word)
+  input  wire [2:0]  execute_funct3_i,                   // funct3 from previous stage
+  output reg  [2:0]  memory_funct3_o,                    // memory_funct3_o (byte,halfword,word)
 
-    input  wire [`OPCODE_WIDTH-1:0] execute_opcode_type_i,  // opcode type from previous stage
-    output reg  [`OPCODE_WIDTH-1:0] memory_opcode_type_o,       //opcode type
+  input  wire [`OPCODE_WIDTH-1:0] execute_opcode_type_i, // opcode type from previous stage
+  output reg  [`OPCODE_WIDTH-1:0] memory_opcode_type_o,  // opcode type
 
-    input  wire [31:0] execute_pc_i,  //PC from previous stage
-    output reg  [31:0] memory_pc_o,       //memory_pc_o value
+  input  wire [31:0] execute_pc_i,                       // PC from previous stage
+  output reg  [31:0] memory_pc_o,                        // memory_pc_o value
 
-    // Basereg Control
-    input  wire        execute_rd_write_en_i,   // write rd to base reg is enabled (from memoryaccess stage)
-    output reg         memory_rd_write_en_o,        // write rd to the base reg if enabled
-    input  wire [ 4:0] execute_rd_addr_i,        // address for destination register (from previous stage)
-    output reg  [ 4:0] memory_rd_addr_o,             // address for destination register
-    input  wire [31:0] execute_rd_wdata_i,  // value to be written back to destination reg
-    output reg  [31:0] memory_rd_wdata_o,       // value to be written back to destination register
+  // Basereg Control
+  input  wire        execute_rd_write_en_i,              // write rd to base reg is enabled (from memoryaccess stage)
+  output reg         memory_rd_write_en_o,               // write rd to the base reg if enabled
+  input  wire [ 4:0] execute_rd_addr_i,                  // address for destination register (from previous stage)
+  output reg  [ 4:0] memory_rd_addr_o,                   // address for destination register
+  input  wire [31:0] execute_rd_wdata_i,                 // value to be written back to destination reg
+  output reg  [31:0] memory_rd_wdata_o,                  // value to be written back to destination register
 
-    // Data Memory Interface
-    //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-    output reg         memory_bus_cyc_data_o,
-    output reg         memory_req_o,      //request for read/write access to data memory
-    output reg         memory_we_o,   //write-enable (1 = write, 0 = read)
-    output reg  [31:0] memory_addr_o,     //data memory address
-    output reg  [31:0] memory_wdata_o,    //data to be stored to memory
-    output reg  [ 3:0] memory_be_o,      //byte enable for write {byte3, byte2, byte1, byte0}
-    //ack by data memory (high when data to be read is ready or when write data is already written)
-    input  wire        memory_gnt_i,
-    input  wire        memory_stall_i,    //stall by data memory (1 = data memory is busy)
-    input  wire [31:0] memory_rdata_i,    //data retrieve from data memory
-    output reg  [31:0] memory_data_load_i,        //data to be loaded to base reg (z-or-s extended)
+  // Data Memory Interface
+  //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
+  output reg         memory_bus_cyc_data_o,             
+  output reg         memory_req_o,                       // request for read/write access to data memory
+  output reg         memory_we_o,                        // write-enable (1 = write, 0 = read)
+  output reg  [31:0] memory_addr_o,                      // data memory address
+  output reg  [31:0] memory_wdata_o,                     // data to be stored to memory
+  output reg  [ 3:0] memory_be_o,                        // byte enable for write {byte3, byte2, byte1, byte0}
+  //ack by data memory (high when data to be read is ready or when write data is already written)
+  input  wire        memory_gnt_i,                                                                              
+  input  wire        memory_stall_i,                     // stall by data memory (1 = data memory is busy)
+  input  wire [31:0] memory_rdata_i,                     // data retrieve from data memory
+  output reg  [31:0] memory_data_load_i,                 // data to be loaded to base reg (z-or-s extended)
 
-    /// Pipeline Control ///
-    input  wire stall_from_alu,  //stalls this stage when incoming instruction is a load/store
-    input  wire memory_en_i,     // input clk enable for pipeline stalling of this stage
-    output reg  writeback_en_o,          // output clk enable for pipeline stalling of next stage
-    input  wire memory_stall_i,      //informs this stage to stall
-    output reg  memory_pipeline_stall_o,           //informs pipeline to stall
-    input  wire memory_flush_i,      //flush this stage
-    output reg  memory_pipeline_flush_o            //flush previous stages
+  /// Pipeline Control ///
+  input  wire        stall_from_alu,                     // stalls this stage when incoming instruction is a load/store
+  input  wire        memory_en_i,                        // input clk enable for pipeline stalling of this stage
+  output reg         writeback_en_o,                     // output clk enable for pipeline stalling of next stage
+  input  wire        memory_stall_i,                     // informs this stage to stall
+  output reg         memory_pipeline_stall_o,            // informs pipeline to stall
+  input  wire        memory_flush_i,                     // flush this stage
+  output reg         memory_pipeline_flush_o             // flush previous stages
 );
 
   reg [31:0] data_store_d;  // data to be stored to memory
@@ -105,7 +105,7 @@ module mem (
       memory_bus_cyc_data_o <= memory_en_i;
       // request completed after grant
       if (memory_gnt_i) begin
-        pending_request <= 0;  // not pending any more
+        pending_request      <= 0;  // not pending any more
       end
 
       // update register only if this stage is enabled and not stalled (after load/store operation)
