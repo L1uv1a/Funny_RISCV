@@ -23,7 +23,7 @@
 It also generates the memory_we_o signal, which indicates whether a write operation 
 should be performed on the data memory.
  - Pipeline control: The module can stall the pipeline by asserting the stall signal
- if the data memory access is not yet acknowledged (memory_gnt_i) or if there is a stall
+ if the data memory access is not yet acknowledged (memory_ack_i) or if there is a stall
  request from the ALU stage (stall_from_alu). It can also flush the current stage and
  previous stages using the flush signal based on the input memory_flush_i signal. The module 
  controls the clock enable signals (writeback_en_o) for the next stage based on the stall and flush 
@@ -57,15 +57,15 @@ module mem (
   output reg  [31:0] memory_rd_wdata_o,                  // value to be written back to destination register
 
   // Data Memory Interface
-  //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
+  // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
   output reg         memory_bus_cyc_data_o,             
   output reg         memory_req_o,                       // request for read/write access to data memory
   output reg         memory_we_o,                        // write-enable (1 = write, 0 = read)
   output reg  [31:0] memory_addr_o,                      // data memory address
   output reg  [31:0] memory_wdata_o,                     // data to be stored to memory
   output reg  [ 3:0] memory_be_o,                        // byte enable for write {byte3, byte2, byte1, byte0}
-  //ack by data memory (high when data to be read is ready or when write data is already written)
-  input  wire        memory_gnt_i,                                                                              
+  // ack by data memory (high when data to be read is ready or when write data is already written)
+  input  wire        memory_ack_i,                                                                              
   input  wire        memory_stall_i,                     // stall by data memory (1 = data memory is busy)
   input  wire [31:0] memory_rdata_i,                     // data retrieve from data memory
   output reg  [31:0] memory_data_load_i,                 // data to be loaded to base reg (z-or-s extended)
@@ -104,7 +104,7 @@ module mem (
       // wishbone cycle will only be high if this stage is enabled
       memory_bus_cyc_data_o <= memory_en_i;
       // request completed after grant
-      if (memory_gnt_i) begin
+      if (memory_ack_i) begin
         pending_request      <= 0;  // not pending any more
       end
 
@@ -168,7 +168,7 @@ module mem (
   always @* begin
     //stall while data memory has not yet acknowledged i.e.write data is not yet written or
     //read data is not yet available (no ack yet). Don't stall when need to flush by next stage
-    memory_pipeline_stall_o        = ((stall_from_alu && memory_en_i && !memory_gnt_i) || memory_stall_i) && !memory_flush_i;
+    memory_pipeline_stall_o        = ((stall_from_alu && memory_en_i && !memory_ack_i) || memory_stall_i) && !memory_flush_i;
     memory_pipeline_flush_o        = memory_flush_i;  //flush this stage along with previous stages
     data_store_d = 0;
     data_load_d  = 0;

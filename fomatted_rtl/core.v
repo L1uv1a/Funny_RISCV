@@ -63,14 +63,14 @@ module core #(
   // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
   output wire        o_wb_cyc_data,
   output wire        o_wb_stb_data,         // request for read/write access to data memory
-  output wire        o_wb_we_data,          // write-enable (1 = write, 0 = read)
+  output wire        o_wb_we,          // write-enable (1 = write, 0 = read)
   output wire [31:0] o_wb_addr_data,        // address of data memory for store/load
   output wire [31:0] o_wb_data_data,        // data to be stored to memory
   // byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
   output wire [ 3:0] o_wb_sel_data,
   // ack by data memory (high when read data is ready or when write data is already written)
-  input  wire        i_wb_ack_data,
-  input  wire        i_wb_stall_data,       // stall by data memory
+  input  wire        i_wb_ack,
+  input  wire        i_wb_stall,       // stall by data memory
   input  wire [31:0] i_wb_data_data,        // data retrieve from memory
   // Interrupts
   input  wire        i_external_interrupt,  // interrupt from external source
@@ -308,16 +308,16 @@ module core #(
       .prev_rd_wdata    (alu_rd),                                        // value to be written back to destination reg
       .rd_wdata         (memoryaccess_rd),                               // value to be written back to destination register
       // Data Memory Control
-      .wb_bus_cyc_data  (o_wb_cyc_data),                                 // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-      .wb_stb_data      (o_wb_stb_data),                                 // request for read/write access to data memory
-      .wb_w_r_en_data   (o_wb_we_data),                                  // write-enable (1 = write, 0 = read)
-      .wb_addr_data     (o_wb_addr_data),                                // data memory address
-      .wb_wdata_data    (o_wb_data_data),                                // data to be stored to memory (mask-aligned)
-      .wb_sel_data      (o_wb_sel_data),                                 // byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
-      .wb_ack_data      (i_wb_ack_data),                                 // ack by data memory (high when read data is ready or when write data is already written
-      .wb_stall_data    (i_wb_stall_data),                               // stall by data memory (1 = data memory is busy)
-      .wb_rdata_data    (i_wb_data_data),                                // data retrieve from data memory 
-      .data_load        (memoryaccess_data_load),                        // data to be loaded to base reg (z-or-s extended) 
+      .memory_bus_cyc_data_o  (o_wb_cyc_data),                                 // bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
+      .memory_stb_data_o  (o_wb_stb_data),                                 // request for read/write access to data memory
+      .memory_we_o  (o_wb_we),                                  // write-enable (1 = write, 0 = read)
+      .memory_addr_data_o  (o_wb_addr_data),                                // data memory address
+      .memory_wdata_data_o  (o_wb_data_data),                                // data to be stored to memory (mask-aligned)
+      .memory_sel_data_o  (o_wb_sel_data),                              // byte strobe for write (1 = write the byte) {byte3,byte2,byte1,byte0}
+      .memory_ack_i  (i_wb_ack),                                 // ack by data memory (high when read data is ready or when write data is already written
+      .memory_stall_i  (i_wb_stall),                               // stall by data memory (1 = data memory is busy)
+      .memory_rdata_i  (i_wb_data_data),                                // data retrieve from data memory 
+      .memory_data_load_i        (memoryaccess_data_load),                        // data to be loaded to base reg (z-or-s extended) 
       /// Pipeline Control ///
       .stall_from_alu   (o_stall_from_alu),                              // stalls this stage when incoming instrruction is a load/store
       .prev_clk_en      (memoryaccess_ce),                               // input clk enable for pipeline stalling of this stage
