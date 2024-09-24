@@ -33,58 +33,58 @@ should be performed on the data memory.
 `include "rv32i_header.vh"
 
 module mem (
-    input wire clk,
-    input wire rstn,
+  input wire clk,
+  input wire rstn,
 
-    input wire [31:0] rs2_wdata,  // data to be stored to memory is always rs2_wdata
-    input wire [31:0] alu_result, // result from ALU (mem address to load/store)
+  input wire [31:0] rs2_wdata,  // data to be stored to memory is always rs2_wdata
+  input wire [31:0] alu_result, // result from ALU (mem address to load/store)
 
-    input  wire [2:0] prev_funct3,  //funct3 from previous stage
-    output reg  [2:0] funct3,       //funct3 (byte,halfword,word)
+  input  wire [2:0] prev_funct3,  //funct3 from previous stage
+  output reg  [2:0] funct3,       //funct3 (byte,halfword,word)
 
-    input  wire [`OPCODE_WIDTH-1:0] prev_opcode_type,  // opcode type from previous stage
-    output reg  [`OPCODE_WIDTH-1:0] opcode_type,       //opcode type
+  input  wire [`OPCODE_WIDTH-1:0] prev_opcode_type,  // opcode type from previous stage
+  output reg  [`OPCODE_WIDTH-1:0] opcode_type,       //opcode type
 
-    input  wire [31:0] prev_pc,  //PC from previous stage
-    output reg  [31:0] pc,       //PC value
+  input  wire [31:0] prev_pc,  //PC from previous stage
+  output reg  [31:0] pc,       //PC value
 
-    // Basereg Control
-    input  wire        prev_rd_w_en,   // write rd to base reg is enabled (from memoryaccess stage)
-    output reg         rd_w_en,        // write rd to the base reg if enabled
-    input  wire [ 4:0] prev_rd,        // address for destination register (from previous stage)
-    output reg  [ 4:0] rd,             // address for destination register
-    input  wire [31:0] prev_rd_wdata,  // value to be written back to destination reg
-    output reg  [31:0] rd_wdata,       // value to be written back to destination register
+  // Basereg Control
+  input  wire        prev_rd_w_en,   // write rd to base reg is enabled (from memoryaccess stage)
+  output reg         rd_w_en,        // write rd to the base reg if enabled
+  input  wire [ 4:0] prev_rd,        // address for destination register (from previous stage)
+  output reg  [ 4:0] rd,             // address for destination register
+  input  wire [31:0] prev_rd_wdata,  // value to be written back to destination reg
+  output reg  [31:0] rd_wdata,       // value to be written back to destination register
 
-    // Data Memory Control
-    //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
-    output reg         wb_bus_cyc_data,
-    output reg         wb_stb_data,      //request for read/write access to data memory
-    output reg         wb_w_r_en_data,   //write-enable (1 = write, 0 = read)
-    output reg  [31:0] wb_addr_data,     //data memory address
-    output reg  [31:0] wb_wdata_data,    //data to be stored to memory
-    output reg  [ 3:0] wb_sel_data,      //byte select for write {byte3, byte2, byte1, byte0}
-    //ack by data memory (high when data to be read is ready or when write data is already written)
-    input  wire        wb_ack_data,
-    input  wire        wb_stall_data,    //stall by data memory (1 = data memory is busy)
-    input  wire [31:0] wb_rdata_data,    //data retrieve from data memory
-    output reg  [31:0] data_load,        //data to be loaded to base reg (z-or-s extended)
+  // Data Memory Control
+  //bus cycle active (1 = normal operation, 0 = all ongoing transaction are to be cancelled)
+  output reg         wb_bus_cyc_data,
+  output reg         wb_stb_data,      //request for read/write access to data memory
+  output reg         wb_w_r_en_data,   //write-enable (1 = write, 0 = read)
+  output reg  [31:0] wb_addr_data,     //data memory address
+  output reg  [31:0] wb_wdata_data,    //data to be stored to memory
+  output reg  [ 3:0] wb_sel_data,      //byte select for write {byte3, byte2, byte1, byte0}
+  //ack by data memory (high when data to be read is ready or when write data is already written)
+  input  wire        wb_ack_data,
+  input  wire        wb_stall_data,    //stall by data memory (1 = data memory is busy)
+  input  wire [31:0] wb_rdata_data,    //data retrieve from data memory
+  output reg  [31:0] data_load,        //data to be loaded to base reg (z-or-s extended)
 
-    /// Pipeline Control ///
-    input  wire stall_from_alu,  //stalls this stage when incoming instruction is a load/store
-    input  wire prev_clk_en,     // input clk enable for pipeline stalling of this stage
-    output reg  clk_en,          // output clk enable for pipeline stalling of next stage
-    input  wire prev_stall,      //informs this stage to stall
-    output reg  stall,           //informs pipeline to stall
-    input  wire prev_flush,      //flush this stage
-    output reg  flush            //flush previous stages
+  /// Pipeline Control ///
+  input  wire        stall_from_alu,  //stalls this stage when incoming instruction is a load/store
+  input  wire        prev_clk_en,     // input clk enable for pipeline stalling of this stage
+  output reg         clk_en,          // output clk enable for pipeline stalling of next stage
+  input  wire        prev_stall,      //informs this stage to stall
+  output reg         stall,           //informs pipeline to stall
+  input  wire        prev_flush,      //flush this stage
+  output reg         flush            //flush previous stages
 );
 
-  reg [31:0] data_store_d;  // data to be stored to memory
-  reg [31:0] data_load_d;  // data to be loaded to basereg
-  reg [3:0] wr_mask_d;
-  reg pending_request;  // high if there is still a pending request (not yet acknowledged request)
-  wire [1:0] addr_2 = alu_result[1:0];  //last 2  bits of data memory address
+  reg  [31:0] data_store_d;  // data to be stored to memory
+  reg  [31:0] data_load_d;  // data to be loaded to basereg
+  reg  [3:0]  wr_mask_d;
+  reg         pending_request;  // high if there is still a pending request (not yet acknowledged request)
+  wire [1:0]  addr_2 = alu_result[1:0];  //last 2  bits of data memory address
 
   wire stall_bit = (prev_stall || stall);
 
@@ -97,7 +97,8 @@ module mem (
       wb_stb_data     <= 0;
       pending_request <= 0;
       wb_bus_cyc_data <= 0;
-    end else begin
+    end 
+    else begin
       // wishbone cycle will only be high if this stage is enabled
       wb_bus_cyc_data <= prev_clk_en;
       // request completed after ack

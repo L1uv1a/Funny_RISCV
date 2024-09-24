@@ -1,0 +1,116 @@
+`define ZERO_REG_ADDR 0
+`define TRUE 1
+`define FALSE 0
+
+`define FUNCT7_BIT6 30
+
+`define RS2_RANGE 24:20
+`define RS1_RANGE 19:15
+`define RD_RANGE 11:7
+`define FUNCT3_RANGE 14:12
+`define OPCODE_RANGE 6:0
+
+`define ALU_WIDTH 14
+`define ADD 0
+`define SUB 1
+`define SLT 2
+`define SLTU 3
+`define XOR 4
+`define OR 5
+`define AND 6
+`define SLL 7
+`define SRL 8
+`define SRA 9
+`define EQ 10
+`define NEQ 11
+`define GE 12
+`define GEU 13
+
+`define OPCODE_WIDTH 11
+`define RTYPE 0
+`define ITYPE 1
+`define LOAD 2
+`define STORE 3
+`define BRANCH 4
+`define JAL 5
+`define JALR 6
+`define LUI 7
+`define AUIPC 8
+`define SYSTEM 9
+`define FENCE 10
+
+`define EXCEPTION_WIDTH 4
+`define ILLEGAL 0
+`define ECALL 1
+`define EBREAK 2
+`define MRET 3
+
+`define OPCODE_RTYPE 7'b0110011 
+`define OPCODE_ITYPE 7'b0010011
+`define OPCODE_LOAD 7'b0000011
+`define OPCODE_STORE 7'b0100011
+`define OPCODE_BRANCH 7'b1100011
+`define OPCODE_JAL 7'b1101111
+`define OPCODE_JALR 7'b1100111
+`define OPCODE_LUI 7'b0110111
+`define OPCODE_AUIPC 7'b0010111
+`define OPCODE_SYSTEM 7'b1110011
+`define OPCODE_FENCE 7'b0001111
+
+`define FUNCT3_ADD 3'b000
+`define FUNCT3_SLT 3'b010 
+`define FUNCT3_SLTU 3'b011
+`define FUNCT3_XOR 3'b100
+`define FUNCT3_OR 3'b110
+`define FUNCT3_AND 3'b111
+`define FUNCT3_SLL 3'b001
+`define FUNCT3_SRA 3'b101
+`define FUNCT3_EQ 3'b000
+`define FUNCT3_NEQ 3'b001
+`define FUNCT3_LT 3'b100
+`define FUNCT3_GE 3'b101
+`define FUNCT3_LTU 3'b110
+`define FUNCT3_GEU 3'b111
+
+`define FUNCT3_LOAD_STORE_BYTE 3'b000
+`define FUNCT3_LOAD_STORE_HALF 3'b001
+`define FUNCT3_LOAD_STORE_WORD 3'b010
+`define FUNCT3_LOAD_BYTE_U 3'b100
+`define FUNCT3_LOAD_HALF_U 3'b101
+
+`define BYTE_SIGN_EXPAND_BITS 24
+`define BYTE_SIGN_BIT 7
+`define HALF_SIGN_EXPAND_BITS 16
+`define HALF_SIGN_BIT 15
+// `define WORD_SIGN_EXPAND_BITS 0
+// `define WORD_SIGN_BIT 31
+
+// Imm extraction
+`define IMM_SIGN_BIT 31
+
+`define ITYPE_IMM_SIGN_EXPAND_BITS 20
+`define ITYPE_IMM_RANGE 31:20
+
+`define STYPE_IMM_SIGN_EXPAND_BITS 20
+`define STYPE_IMM_RANGE_11_5 31:25
+`define STYPE_IMM_RANGE_4_0 11:7
+
+`define BTYPE_IMM_SIGN_EXPAND_BITS 19
+`define BTYPE_IMM_RANGE_12 31
+`define BTYPE_IMM_RANGE_11 7
+`define BTYPE_IMM_RANGE_10_5 30:25
+`define BTYPE_IMM_RANGE_4_1 11:8
+`define BTYPE_IMM_ZERO_FILL_BITS 1
+
+`define JTYPE_IMM_SIGN_EXPAND_BITS 11
+`define JTYPE_IMM_RANGE_20 31
+`define JTYPE_IMM_RANGE_19_12 19:12
+`define JTYPE_IMM_RANGE_11 20
+`define JTYPE_IMM_RANGE_10_1 30:21
+`define JTYPE_IMM_ZERO_FILL_BITS 1
+
+`define UTYPE_IMM_RANGE 31:12
+`define UTYPE_IMM_ZERO_FILL_BITS 12
+
+`define XTYPE_IMM_RANGE 31:20
+`define XTYPE_IMM_ZERO_FILL_BITS 20
