@@ -163,11 +163,11 @@ module alu (
 
     if (alu_add)  result = operand_a + operand_b;
     if (alu_sub)  result = operand_a - operand_b;
-    if (alu_slt)  result = operand_a ^ operand_b;
-    if (alu_sltu) result = operand_a | operand_b;                     ;
-    if (alu_xor)  result = ($signed(operand_a) < $signed(operand_b));
-    if (alu_or)   result = (operand_a < operand_b);
-    if (alu_and)  result = (operand_a & operand_b);
+    if (alu_slt)  result = ($signed(op_a) < $signed(op_b));
+    if (alu_sltu) result = (op_a < op_b);
+    if (alu_xor)  result = op_a ^ op_b;
+    if (alu_or)   result = op_a | op_b;
+    if (alu_and)  result = (op_a & op_b);
     if (alu_sll)  result = (operand_a << operand_b[4:0]);
     if (alu_srl)  result = (operand_a >> operand_b[4:0]);
     if (alu_sra)  result = ($signed(operand_a) >>> operand_b[4:0]);
