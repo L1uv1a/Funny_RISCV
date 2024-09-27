@@ -2,7 +2,7 @@
 */
 module fetch #(
     parameter PC_RESET = 0,
-    parameter int unsigned NUM_REQS = 2;
+    parameter int unsigned NUM_REQS = 2
 ) (
     input clk,
     input rstn,

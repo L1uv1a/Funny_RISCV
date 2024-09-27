@@ -220,7 +220,7 @@ module core #(
     .rst_ni         (i_rst_n),
     .valid_i        (1'b1),
     .instr_i        (fetch_instr),
-    .instr_o        (instr_decompressed),
+    .instr_o        (instr_decompressed)
     //.is_compressed_o(instr_is_compressed),
     // .illegal_instr_o(illegal_c_insn)
   );
