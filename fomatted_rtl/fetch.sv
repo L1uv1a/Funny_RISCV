@@ -105,7 +105,7 @@ module fetch #(
                                         {instr_rdata_i[15:0], rdata[31:16]};
   // An uncompressed unaligned instruction is only valid if both parts are available
   assign valid_unaligned = occupied_q[1] ? 1'b1 :
-                                        (occupied_q[0] & instr_rvalid_i);
+                                        (occupied_q[0]);
 
   // If there is an error, rdata is unknown
   assign unaligned_is_compressed = rdata[17:16] != 2'b11;  // check if 2nd half is a compress instruction (by checking opcode)
@@ -115,7 +115,7 @@ module fetch #(
   always_comb begin
     if (PC[1]) begin
       // unaligned case
-      instr_send     = rdata_unaligned;
+      instr_send    = rdata_unaligned;
 
       if (unaligned_is_compressed) begin
         instr_req_o = valid_q[0];
@@ -124,8 +124,8 @@ module fetch #(
       end
     end else begin
       // aligned case
-      instr_send     = rdata;
-      instr_req_o     = valid_q[0];
+      instr_send    = rdata;
+      instr_req_o   = valid_q[0];
     end
   end
 
@@ -262,7 +262,7 @@ module fetch #(
   end
 
 
-    // pc and pipeline clk enable control logic
+  // pc and pipeline clk enable control logic
 
   always @* begin
     instr_addr = 0;

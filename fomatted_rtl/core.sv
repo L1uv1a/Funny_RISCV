@@ -82,7 +82,7 @@ module core #(
 
   //wires for rv32i_fetch
   wire [31:0]                 fetch_pc;
-  wire [31:0]                 fetch_instr;
+  wire [31:0]                 fetch_instr, instr_decompressed;
 
   //wires for rv32i_decoder
   wire [`ALU_WIDTH-1:0]       decoder_alu;
@@ -209,6 +209,23 @@ module core #(
       .flush (decoder_flush)                                                           // flush this stage
   );
 
+
+
+  ////////////////////////////////////
+  // compressed instruction decoder //         turn 16 bit instruction to 32 bit
+  ////////////////////////////////////
+  
+  ibex_compressed_decoder compressed_decoder_i (
+    .clk_i          (i_clk),
+    .rst_ni         (i_rst_n),
+    .valid_i        (1'b1),
+    .instr_i        (fetch_instr),
+    .instr_o        (instr_decompressed),
+    //.is_compressed_o(instr_is_compressed),
+    // .illegal_instr_o(illegal_c_insn)
+  );
+
+
   /////////////////////
   // decode instance //
   /////////////////////
@@ -217,7 +234,7 @@ module core #(
       .clk              (i_clk),                                                                              
       .rstn             (i_rst_n),                                                                              
 
-      .fetch_instr_i           (fetch_instr),                                          // 32 bit instrruction
+      .fetch_instr_i           (instr_decompressed),                                          // 32 bit instrruction
       .fetch_pc_i          (fetch_pc),                                             // PC value from fetch stage
 
       .decode_pc_o              (decoder_pc),                                           // PC value
