@@ -19,9 +19,9 @@ module fetch #(
     input  logic        instr_rvalid_i, // valid  // fix NO USE
 
     // PC control
-    input        writeback_change_pc,  // high when pc needs to change (trap/return from trap)
+    input        writeback_change_pc,  // high when PC needs to change (trap/return from trap)
     input [31:0] writeback_next_pc,    // next PC due to trap
-    input        alu_change_pc,        // high when pc needs to change (branch/jump)
+    input        alu_change_pc,        // high when PC needs to change (branch/jump)
     input [31:0] alu_next_pc,          // next PC due to branch/jump
 
     // Pipeline control
@@ -150,7 +150,7 @@ module fetch #(
   assign instr_addr_d = flush ? instr_addr_i[31:1] :
                                   instr_addr_next;
 
-  assign pc      =  instr_addr_q[0];
+  assign pc      =  instr_addr_q[31:0];
 
   begin : g_instr_addr_nr
     always_ff @(posedge clk) begin
@@ -183,7 +183,7 @@ module fetch #(
   wire disable_next_stage = ((alu_change_pc || writeback_change_pc) && !(stall || stall_fetch));
   always @(posedge clk, negedge rstn) begin
     if (!rstn) r_clk_en <= 0;
-    // do pipeline bubble when need to change pc so that next stage will be disable
+    // do pipeline bubble when need to change PC so that next stage will be disable
     // and will not execute the instructions already inside the pipeline
     else
       r_clk_en <= !disable_next_stage;
@@ -215,11 +215,11 @@ module fetch #(
     end
   end
 
-// pc and pipeline clk enable control logic
+// PC and pipeline clk enable control logic
 
   always @* begin
     r_clk_en_d   = 0;
-    stall_fetch  = stall;  // stall when retrieving instructions need wait time prepare next PC when changing pc, then do a pipeline bubble to disable the ce of next stage
+    stall_fetch  = stall;  // stall when retrieving instructions need wait time prepare next PC when changing PC, then do a pipeline bubble to disable the ce of next stage
     if (writeback_change_pc) begin
       r_clk_en_d   = 0;
     end else if (alu_change_pc) begin
@@ -236,7 +236,7 @@ module fetch #(
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
-      instr_addr_q   <= 96'b0;
+      instr_addr_q  <= 96'b0;
       rdata_q       <= 96'b0;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
