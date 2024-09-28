@@ -202,22 +202,12 @@ module fetch #(
     end
   end
 
-  for (genvar i = 0; i < DEPTH; i++) begin : g_fifo_regs
-    if (ResetAll) begin : g_rdata_ra
-      always_ff @(posedge clk or negedge rstn) begin
-        if (!rstn) begin
-          rdata_q[i] <= '0;
-        end else if (entry_en[i]) begin
-          if (enable_update_registers) rdata_q[i] <= stall_bit ? rdata_q[i] : rdata_d[i];
-        end
-      end
-    end else begin : g_rdata_nr
+  begin : g_rdata_nr
       always_ff @(posedge clk) begin
         if (entry_en[i]) begin
           if (enable_update_registers) rdata_q[i] <= stall_bit ? rdata_q[i] : rdata_d[i];
         end
       end
-    end
   end
 
 // pc and pipeline clk enable control logic
