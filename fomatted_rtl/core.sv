@@ -192,7 +192,7 @@ module core #(
       .instr_send         (fetch_instr),          // instrruction
 
       .instr_addr_o(o_iaddr),     //Instruction address
-      .instr_addr_i(i_instr_addr)
+      .instr_addr_i(i_instr_addr),
       .instr_rdata_i(i_instr),      // retrieved instruction from Memory
       .instr_req_o(o_stb_instr),  // request for instruction
       .instr_gnt_i(i_ack_instr),  //ack (high if new instruction is ready)
