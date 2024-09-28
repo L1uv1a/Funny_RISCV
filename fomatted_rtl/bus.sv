@@ -14,6 +14,8 @@
  * - All devices (slaves) must respond in the next cycle after the request.
  * - Host (master) arbitration is strictly priority based.
  */
+`timescale 1ns / 1ps
+
 module bus #(
   parameter int NrDevices    = 1,
   parameter int NrHosts      = 1,

@@ -1,4 +1,5 @@
 `include "rv32i_header.svh"
+`timescale 1ns / 1ps
 
 module alu (
   input wire clk,
