@@ -44,10 +44,14 @@ module fetch #(
   reg         stall_fetch;
   reg         stall_q;
 
-  reg   [DEPTH-1:0] [31:0] instr_addr_q; // fifo data in register
-  wire  [DEPTH-1:0] [31:0] instr_addr_d; // combinational logic that feed data to fifo
+  logic [DEPTH-1:0] [31:0] rdata_d,      rdata_q;
+  reg   [DEPTH-1:0] [31:0] instr_addr_d, instr_addr_q; // fifo data in wire (d) and register (q)
+  logic [DEPTH-1:0]        valid_pushed, valid_popped;
   logic [DEPTH-1:0]        occupied_d,   occupied_q; // check if this depth occupied or not 
-
+  logic [DEPTH-1:0]        entry_en;
+  logic [DEPTH-1:0]        lowest_free_entry;
+  logic                    aligned_is_compressed, unaligned_is_compressed;
+  
   /*
                                            WIDTH = 32
                          >------------------------------------------<
