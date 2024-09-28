@@ -44,9 +44,11 @@ module fetch #(
   logic [DEPTH-1:0] [31:0] rdata_d,      rdata_q;
   reg   [DEPTH-1:0] [31:0] instr_addr_d, instr_addr_q; // fifo data in wire (d) and register (q)
   logic [DEPTH-1:0]        valid_pushed, valid_popped;
+  logic [DEPTH-1:0]        valid_d,      valid_q;
   logic [DEPTH-1:0]        occupied_d,   occupied_q; // check if this depth occupied or not 
   logic [DEPTH-1:0]        entry_en;
   logic [DEPTH-1:0]        lowest_free_entry;
+  logic             [31:0] rdata, rdata_unaligned;
   logic                    aligned_is_compressed, unaligned_is_compressed;
   
   /*
@@ -91,7 +93,7 @@ module fetch #(
     // data flops are enabled if there is new data to shift into it, or
     assign entry_en[i] = (valid_pushed[i+1] & pop_fifo) |
                          // a new request is incoming and this is the lowest free entry
-                         (in_valid_i & lowest_free_entry[i] & ~pop_fifo);
+                         (lowest_free_entry[i] & ~pop_fifo);
 
     // take the next entry or the incoming data
     assign rdata_d[i]  = occupied_q[i+1] ? rdata_q[i+1] : instr_rdata_i; // if higher depth is occupied, shift down. Otherwise get new data
@@ -150,15 +152,7 @@ module fetch #(
 
   assign pc      = {instr_addr_q, 1'b0};
 
-  if (ResetAll) begin : g_instr_addr_ra
-    always_ff @(posedge clk or negedge rstn) begin
-      if (!rstn) begin
-        instr_addr_q <= '0;
-      end else if (instr_addr_en) begin
-        instr_addr_q <= instr_addr_d;
-      end
-    end
-  end else begin : g_instr_addr_nr
+  begin : g_instr_addr_nr
     always_ff @(posedge clk) begin
       if (instr_addr_en) begin
         instr_addr_q <= instr_addr_d;
