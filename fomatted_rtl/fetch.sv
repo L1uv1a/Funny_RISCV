@@ -7,7 +7,7 @@ module fetch #(
     input clk,
     input rstn,
 
-    output reg [31:0] pc,         // PC value of current instruction
+    output logic [31:0] pc,         // PC value of current instruction
     output reg [31:0] instr_send, // instruction sent to pipeline
 
     output logic        instr_req_o,    // req
@@ -150,7 +150,7 @@ module fetch #(
   assign instr_addr_d = flush ? instr_addr_i[31:1] :
                                   instr_addr_next;
 
-  assign pc      = {instr_addr_q, 1'b0};
+  assign pc      =  instr_addr_q[0];
 
   begin : g_instr_addr_nr
     always_ff @(posedge clk) begin
@@ -198,7 +198,10 @@ module fetch #(
     if (!rstn) begin
       occupied_q <= '0;
     end else begin
-      if (enable_update_registers) occupied_q <= stall_bit ? occupied_q : occupied_d;
+      if (enable_update_registers) begin 
+        occupied_q <= stall_bit ? occupied_q : occupied_d;
+        instr_addr_o <= instr_addr_next;
+      end
     end
   end
   
@@ -233,6 +236,8 @@ module fetch #(
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
+      instr_addr_q   <= 96'b0;
+      rdata_q       <= 96'b0;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled

@@ -55,7 +55,6 @@ module core #(
 
   // instrruction Memory Interface (32 bit rom)
   input  wire [31:0] i_instr,                // 32-bit instrruction
-  input  wire [31:0] i_instr_addr,
   output wire [31:0] o_iaddr,               // address of instrruction
   output wire        o_stb_instr,            // request for read access to instrruction memory
   input  wire        i_ack_instr,            // ack (high if new instrruction is ready)
@@ -192,7 +191,6 @@ module core #(
       .instr_send         (fetch_instr),          // instrruction
 
       .instr_addr_o(o_iaddr),     //Instruction address
-      .instr_addr_i(i_instr_addr),
       .instr_rdata_i(i_instr),      // retrieved instruction from Memory
       .instr_req_o(o_stb_instr),  // request for instruction
       .instr_gnt_i(i_ack_instr),  //ack (high if new instruction is ready)
