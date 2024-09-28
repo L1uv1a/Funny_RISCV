@@ -12,7 +12,6 @@ module fetch #(
 
     output logic        instr_req_o,    // req
     input  logic        instr_gnt_i,    // gnt
-    input  logic [31:0] instr_addr_i,
     output logic [31:0] instr_addr_o,   // addr to get instr
     input  logic [31:0] instr_rdata_i,  // rdata
     input  logic        instr_err_i,    // err    // fix NO USE
@@ -147,7 +146,7 @@ module fetch #(
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
-  assign instr_addr_d = flush ? instr_addr_i[31:1] :
+  assign instr_addr_d = flush ? instr_addr_d[31:1] :
                                   instr_addr_next;
 
   assign pc      =  instr_addr_q[31:0];
