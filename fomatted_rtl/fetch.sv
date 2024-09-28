@@ -201,13 +201,15 @@ module fetch #(
       if (enable_update_registers) occupied_q <= stall_bit ? occupied_q : occupied_d;
     end
   end
-
-  begin : g_rdata_nr
+  
+  for (genvar i = 0; i < DEPTH; i++) begin : g_fifo_regs
+    begin : g_rdata_nr
       always_ff @(posedge clk) begin
         if (entry_en[i]) begin
           if (enable_update_registers) rdata_q[i] <= stall_bit ? rdata_q[i] : rdata_d[i];
         end
       end
+    end
   end
 
 // pc and pipeline clk enable control logic
