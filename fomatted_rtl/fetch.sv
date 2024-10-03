@@ -30,12 +30,9 @@ module fetch #(
 );
   localparam int unsigned DEPTH = NUM_REQS + 1;
 
-
-  wire [31:0] instr_mem;  // instruction from memory
   wire        instr_ack;  // high if new instruction is now on the bus
   logic instr_req;
   assign instr_ack = instr_gnt_i;
-  assign instr_mem = instr_rdata_i;
   assign instr_req_o = instr_req;
 
 
@@ -144,8 +141,8 @@ module fetch #(
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
-  assign instr_addr_d = flush ? instr_addr_d :
-                                  instr_addr_next;
+  assign instr_addr_d = rstn ? instr_rdata_i[31:1] :
+                                  instr_addr_next[31:1];
 
   assign pc[31:0]      =  instr_addr_q[31:0];
 
@@ -234,8 +231,8 @@ module fetch #(
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
-      instr_addr_q[95:0]  <= 96'b0;
-      rdata_q[95:0]       <= 96'b0;
+      instr_addr_q  <= 96'b0;
+      rdata_q       <= 96'b0;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled
