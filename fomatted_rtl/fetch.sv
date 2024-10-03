@@ -34,7 +34,7 @@ module fetch #(
   wire [31:0] instr_mem;  // instruction from memory
   wire        instr_ack;  // high if new instruction is now on the bus
   assign instr_ack = instr_gnt_i;
-  assign instr_rdata_i = instr_mem;
+  assign instr_mem = instr_rdata_i;
 
 
   reg         r_clk_en;
@@ -241,6 +241,7 @@ module fetch #(
       clk_en        <= 0;
       instr_addr_q  <= 96'b0;
       rdata_q       <= 96'b0;
+      instr_addr_o  <= PC_RESET;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled
