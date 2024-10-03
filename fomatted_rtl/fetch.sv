@@ -47,6 +47,7 @@ module fetch #(
   logic             [31:0] rdata, rdata_unaligned;
   logic             [31:0] hold_next_addr;
   logic                    aligned_is_compressed, unaligned_is_compressed;
+  logic             [31:1] instr_addr_next;
 
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
@@ -131,7 +132,7 @@ module fetch #(
   //////////////////////////////////////////////
 
   // Update the address on branches and every time an instruction is driven
-  logic [31:1] instr_addr_next;
+
 
 
   // Increment the address by two every time a compressed instruction is popped
