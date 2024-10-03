@@ -45,7 +45,7 @@ module fetch #(
   logic [DEPTH-1:0]        entry_en;
   logic [DEPTH-1:0]        lowest_free_entry;
   logic             [31:0] rdata, rdata_unaligned;
-  logic             [31:0] hold_next_addr
+  logic             [31:0] hold_next_addr;
   logic                    aligned_is_compressed, unaligned_is_compressed;
 
   assign instr_ack = instr_gnt_i;
