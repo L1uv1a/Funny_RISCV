@@ -136,7 +136,7 @@ module fetch #(
   //////////////////////////////////////////////
 
   // Update the address on branches and every time an instruction is driven
-  logic [31:1] instr_addr_next 
+  logic [31:1] instr_addr_next;
 
   assign instr_addr_en = flush | instr_req_o;
 
