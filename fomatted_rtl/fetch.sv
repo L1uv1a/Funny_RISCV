@@ -151,7 +151,7 @@ module fetch #(
   assign instr_addr_d = flush ? instr_addr_d :
                                   instr_addr_next;
 
-  assign pc      =  instr_addr_q[31:0];
+  assign [31:0] pc      =  instr_addr_q[31:0];
 
   begin : g_instr_addr_nr
     always_ff @(posedge clk) begin
