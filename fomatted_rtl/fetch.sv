@@ -34,6 +34,7 @@ module fetch #(
   logic instr_req;
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
+  assign instr_addr_o = {instr_addr_next[31:1], 1'b0};
 
 
   reg         r_clk_en;
@@ -48,6 +49,7 @@ module fetch #(
   logic [DEPTH-1:0]        entry_en;
   logic [DEPTH-1:0]        lowest_free_entry;
   logic             [31:0] rdata, rdata_unaligned;
+  logic             [31:0] hold_addr;
   logic                    aligned_is_compressed, unaligned_is_compressed;
   
   /*
@@ -140,7 +142,7 @@ module fetch #(
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
-  assign instr_addr_d = instr_addr_next[31:1];
+  assign instr_addr_d = hold_addr;
 
   assign pc[31:0]      =  instr_addr_q[31:0];
 
@@ -180,13 +182,14 @@ module fetch #(
 
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
-      occupied_q <= '0;
-      instr_addr_o  <= PC_RESET;
+      occupied_q <= 0;
+      instr_addr_q <= PC_RESET;
+      hold_addr <= 0;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
-        instr_addr_o <= instr_addr_next;
         instr_addr_q <= instr_addr_d;
+        hold_addr <= instr_addr_o;
       end
     end
   end
@@ -222,7 +225,6 @@ module fetch #(
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
-      instr_addr_q  <= 96'b0;
       rdata_q       <= 96'b0;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
