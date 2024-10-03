@@ -234,8 +234,8 @@ module fetch #(
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
-      instr_addr_q  <= 96'b0;
-      rdata_q       <= 96'b0;
+      instr_addr_q[95:0]  <= 96'b0;
+      rdata_q[95:0]       <= 96'b0;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled
