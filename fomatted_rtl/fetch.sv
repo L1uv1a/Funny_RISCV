@@ -35,6 +35,7 @@ module fetch #(
   wire        instr_ack;  // high if new instruction is now on the bus
   assign instr_ack = instr_gnt_i;
   assign instr_mem = instr_rdata_i;
+  assign instr_req_o = instr_req;
 
 
   reg         r_clk_en;
@@ -45,7 +46,6 @@ module fetch #(
   logic [DEPTH-1:0] [31:0] rdata_d,      rdata_q;
   reg   [DEPTH-1:0] [31:0] instr_addr_d, instr_addr_q; // fifo data in wire (d) and register (q)
   logic [DEPTH-1:0]        valid_pushed, valid_popped;
-  logic [DEPTH-1:0]        valid_d,      valid_q;
   logic [DEPTH-1:0]        occupied_d,   occupied_q; // check if this depth occupied or not 
   logic [DEPTH-1:0]        entry_en;
   logic [DEPTH-1:0]        lowest_free_entry;
@@ -120,16 +120,9 @@ module fetch #(
     if (pc[1]) begin
       // unaligned case
       instr_send    = rdata_unaligned;
-
-      if (unaligned_is_compressed) begin
-        instr_req_o = valid_q[0];
-      end else begin
-        instr_req_o = valid_unaligned;
-      end
     end else begin
       // aligned case
       instr_send    = rdata;
-      instr_req_o   = valid_q[0];
     end
   end
 
