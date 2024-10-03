@@ -140,8 +140,7 @@ module fetch #(
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
-  assign instr_addr_d = rstn ? instr_rdata_i[31:1] :
-                                  instr_addr_next[31:1];
+  assign instr_addr_d = instr_addr_next[31:1];
 
   assign pc[31:0]      =  instr_addr_q[31:0];
 
