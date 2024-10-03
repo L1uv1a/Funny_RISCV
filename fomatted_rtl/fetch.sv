@@ -131,7 +131,6 @@ module fetch #(
   // Update the address on branches and every time an instruction is driven
   logic [31:1] instr_addr_next;
 
-  assign instr_addr_en = flush | instr_req_o;
 
   // Increment the address by two every time a compressed instruction is popped
   assign addr_incr_two = instr_addr_q[1] ? unaligned_is_compressed :
@@ -146,14 +145,6 @@ module fetch #(
 
   assign pc[31:0]      =  instr_addr_q[31:0];
 
-  begin : g_instr_addr_nr
-    always_ff @(posedge clk) begin
-      if (instr_addr_en) begin
-        instr_addr_q <= instr_addr_d;
-      end
-    end
-  end
-  
   ////////////////////
   // FIFO registers //
   ////////////////////
@@ -196,6 +187,7 @@ module fetch #(
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
         instr_addr_o <= instr_addr_next;
+        instr_addr_q <= instr_addr_d;
       end
     end
   end
