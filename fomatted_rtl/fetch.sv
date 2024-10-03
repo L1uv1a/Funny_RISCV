@@ -200,6 +200,7 @@ module fetch #(
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
       occupied_q <= '0;
+      instr_addr_o  <= PC_RESET;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
@@ -241,7 +242,6 @@ module fetch #(
       clk_en        <= 0;
       instr_addr_q  <= 96'b0;
       rdata_q       <= 96'b0;
-      instr_addr_o  <= PC_RESET;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled
