@@ -136,6 +136,8 @@ module fetch #(
   //////////////////////////////////////////////
 
   // Update the address on branches and every time an instruction is driven
+  logic [31:1] instr_addr_next 
+
   assign instr_addr_en = flush | instr_req_o;
 
   // Increment the address by two every time a compressed instruction is popped
@@ -146,7 +148,7 @@ module fetch #(
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
-  assign instr_addr_d = flush ? instr_addr_d[31:1] :
+  assign instr_addr_d = flush ? instr_addr_d :
                                   instr_addr_next;
 
   assign pc      =  instr_addr_q[31:0];
