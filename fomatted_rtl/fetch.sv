@@ -32,6 +32,8 @@ module fetch #(
 
   wire        instr_ack;  // high if new instruction is now on the bus
   logic instr_req;
+  logic [31:1] instr_addr_next;
+
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
   assign instr_addr_o = {instr_addr_next[31:1], 1'b0};
@@ -131,7 +133,6 @@ module fetch #(
   //////////////////////////////////////////////
 
   // Update the address on branches and every time an instruction is driven
-  logic [31:1] instr_addr_next;
 
 
   // Increment the address by two every time a compressed instruction is popped
