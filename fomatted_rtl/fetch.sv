@@ -31,11 +31,9 @@ module fetch #(
   localparam int unsigned DEPTH = NUM_REQS + 1;
 
 
-  wire        instr_req;  // request for instruction
   wire [31:0] instr_mem;  // instruction from memory
   wire        instr_ack;  // high if new instruction is now on the bus
   assign instr_ack = instr_gnt_i;
-  assign instr_req_o = instr_req;
   assign instr_rdata_i = instr_mem;
 
 
