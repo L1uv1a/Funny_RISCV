@@ -51,7 +51,7 @@ module fetch #(
 
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
-  assign instr_addr_o = (hold_next_addr[1] | hold_next_addr[0]) ? instr_addr_next : PC_RESET;
+  assign instr_addr_o = (hold_next_addr[2:2] | hold_next_addr[1:1]) ? instr_addr_next : rdata_q[31:0];
   
   /*
                                            WIDTH = 32
@@ -226,7 +226,7 @@ module fetch #(
     if (!rstn) begin
       clk_en        <= 0;
       instr_addr_q  <= 96'b0;
-      rdata_q       <= 96'b0;
+      rdata_q[31:0] <= PC_RESET; 
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled
