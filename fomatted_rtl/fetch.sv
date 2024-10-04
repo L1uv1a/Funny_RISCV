@@ -51,7 +51,7 @@ module fetch #(
 
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
-  assign instr_addr_o = (hold_next_addr[2:2] | hold_next_addr[1:1]) ? instr_addr_next : rdata_q[31:0];
+  assign instr_addr_o = (hold_next_addr[2:2] | hold_next_addr[1:1]) ? instr_addr_next : instr_addr_q[31:0];
   
   /*
                                            WIDTH = 32
@@ -184,7 +184,7 @@ module fetch #(
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
       occupied_q <= 3'b0;
-      hold_next_addr <= PC_RESET;
+      hold_next_addr <= PC_RESET + 4;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
