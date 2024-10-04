@@ -183,7 +183,7 @@ module fetch #(
 
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
-      occupied_q <= 3'b1;
+      occupied_q <= 3'b0;
       hold_next_addr <= 32'b0;
     end else begin
       if (enable_update_registers) begin 
@@ -225,8 +225,7 @@ module fetch #(
   always @(posedge clk, negedge rstn) begin
     if (!rstn) begin
       clk_en        <= 0;
-      instr_addr_q  <= 96'b0;
-      rdata_q[31:0] <= PC_RESET; 
+      instr_addr_q[31:0]  <= PC_RESET;
     end else begin
       if (!stall_bit && flush) clk_en <= 0;
       //clock-enable will change only when not stalled
