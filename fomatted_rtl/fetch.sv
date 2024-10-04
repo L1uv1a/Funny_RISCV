@@ -183,7 +183,7 @@ module fetch #(
 
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
-      occupied_q <= 0;
+      occupied_q <= 3'b1;
       hold_next_addr <= 32'b0;
     end else begin
       if (enable_update_registers) begin 
