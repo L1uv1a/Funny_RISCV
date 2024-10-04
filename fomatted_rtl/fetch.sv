@@ -51,7 +51,7 @@ module fetch #(
 
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
-  assign instr_addr_o = instr_addr_q[31:0];
+  assign instr_addr_o = instr_addr_q[0];
   
   /*
                                            WIDTH = 32
@@ -139,13 +139,13 @@ module fetch #(
   assign addr_incr_two = instr_addr_q[1] ? unaligned_is_compressed :
                                            aligned_is_compressed;
 
-  assign instr_addr_next = (instr_addr_q[31:1] +
+  assign instr_addr_next = (instr_addr_q [0] [31:1] +
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
   assign instr_addr_d = hold_next_addr;
 
-  assign pc[31:0]      =  instr_addr_q[31:0];
+  assign pc[31:0]      =  instr_addr_q [1] [31:0];
 
   ////////////////////
   // FIFO registers //
