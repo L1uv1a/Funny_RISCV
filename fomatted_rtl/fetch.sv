@@ -183,8 +183,8 @@ module fetch #(
 
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
-      occupied_q <= 3'b1;
-      hold_next_addr <= PC_RESET + 4;
+      occupied_q          <= 3'b0;
+      hold_next_addr      <= PC_RESET + 4;
       instr_addr_q[31:0]  <= PC_RESET;
     end else begin
       if (enable_update_registers) begin 
