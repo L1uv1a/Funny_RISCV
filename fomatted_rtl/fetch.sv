@@ -106,6 +106,7 @@ module fetch #(
   assign lowest_free_entry[DEPTH-1] = ~occupied_q[DEPTH-1] & occupied_q[DEPTH-2];
   assign valid_pushed     [DEPTH-1] = occupied_q[DEPTH-1] | lowest_free_entry[DEPTH-1];
   assign valid_popped     [DEPTH-1] = pop_fifo ? 1'b0 : valid_pushed[DEPTH-1];
+  assign occupied_d [DEPTH-1]       = valid_popped[DEPTH-1] & ~flush;
   assign entry_en[DEPTH-1]          = lowest_free_entry[DEPTH-1];
   assign rdata_d [DEPTH-1]          = instr_rdata_i;
 
