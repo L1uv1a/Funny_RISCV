@@ -186,6 +186,7 @@ module fetch #(
       occupied_q               <= 3'b0;
       hold_next_addr           <= instr_addr_o;
       instr_addr_q             <= 96'b0;
+      rdata_q                  <= 96'b0;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
