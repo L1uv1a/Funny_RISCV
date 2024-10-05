@@ -31,7 +31,7 @@ module fetch #(
   localparam int unsigned DEPTH = NUM_REQS + 1;
 
   wire        instr_ack;  // high if new instruction is now on the bus
-  logic instr_req;
+  logic       instr_req;
 
   reg         r_clk_en;
   reg         r_clk_en_d;
@@ -52,7 +52,8 @@ module fetch #(
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
   assign instr_addr_o = instr_addr_q[0] [1:1] | instr_addr_q[0] [2:2] ? instr_addr_q[0] : PC_RESET;
-  
+  assign rdata = occupied_q[0] ? rdata_q[0] : instr_rdata_i;t
+
   /*
                                            WIDTH = 32
                          >------------------------------------------<
@@ -137,7 +138,7 @@ module fetch #(
 
   // Increment the address by two every time a compressed instruction is popped
   assign addr_incr_two = instr_addr_q[1] ? unaligned_is_compressed :
-                                           aligned_is_compressed;
+                                           aligned_is_compressed; 
 
   assign instr_addr_next = (instr_addr_q [0] [31:1] +
                             // Increment address by 4 or 2
