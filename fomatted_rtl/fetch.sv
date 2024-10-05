@@ -74,7 +74,7 @@ module fetch #(
 
   assign pop_fifo = (~aligned_is_compressed | pc[1]);   // if there is a 16 bit instruction at 1st half, or a 32 bit instruction then fifo ready for pop
 
-  for (genvar i = 0; i < DEPTH; i++) begin : g_fifo_next
+  for (genvar i = 0; i < DEPTH - 1; i++) begin : g_fifo_next
     // Calculate lowest free entry (write pointer)
     if (i == 0) begin : g_ent0
       assign lowest_free_entry[i] = ~occupied_q[i];                   // depth = 0 is already lowest depth                
@@ -101,6 +101,13 @@ module fetch #(
     // take the next entry or the incoming data
     assign rdata_d[i]  = occupied_q[i+1] ? rdata_q[i+1] : instr_rdata_i; // if higher depth is occupied, shift down. Otherwise get new data
   end
+
+    // The top entry is similar but with simpler muxing
+  assign lowest_free_entry[DEPTH-1] = ~occupied_q[DEPTH-1] & occupied_q[DEPTH-2];
+  assign valid_pushed     [DEPTH-1] = occupied_q[DEPTH-1] | lowest_free_entry[DEPTH-1];
+  assign valid_popped     [DEPTH-1] = pop_fifo ? 1'b0 : valid_pushed[DEPTH-1];
+  assign entry_en[DEPTH-1]          = lowest_free_entry[DEPTH-1];
+  assign rdata_d [DEPTH-1]          = instr_rdata_i;
 
   ///////////////////////////
   // Construct output data //
