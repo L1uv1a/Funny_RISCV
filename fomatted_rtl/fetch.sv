@@ -74,7 +74,7 @@ module fetch #(
 
   assign pop_fifo = (~aligned_is_compressed | pc[1]);   // if there is a 16 bit instruction at 1st half, or a 32 bit instruction then fifo ready for pop
 
-  for (genvar i = 0; i < DEPTH; i++) begin : g_fifo_next
+  for (genvar i = 0; i < (DEPTH - 1); i++) begin : g_fifo_next
     // Calculate lowest free entry (write pointer)
     if (i == 0) begin : g_ent0
       assign lowest_free_entry[i] = ~occupied_q[i];                   // depth = 0 is already lowest depth                
