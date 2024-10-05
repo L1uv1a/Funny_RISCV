@@ -184,11 +184,11 @@ module fetch #(
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
       occupied_q               <= 3'b0;
-      hold_next_addr           <= instr_addr_o + 4;
+      hold_next_addr           <= instr_addr_o;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
-        instr_addr_q <= instr_addr_d;
+        instr_addr_q <= instr_addr_q[0] [0:0] | instr_addr_q[0] [1:1] ? instr_addr_d : instr_addr_d + 4;
         hold_next_addr <= instr_addr_next;
       end
     end
