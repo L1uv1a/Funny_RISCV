@@ -189,7 +189,7 @@ module fetch #(
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
-        instr_addr_q <= instr_addr_d
+        instr_addr_q <= instr_addr_d;
         hold_next_addr <= instr_addr_next;
       end
     end
