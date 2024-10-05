@@ -153,8 +153,6 @@ module fetch #(
                             {29'd0,~addr_incr_two,addr_incr_two});
   assign instr_addr_next [0:0] = 1'b0;
 
-  assign instr_addr_d = hold_next_addr;
-
   assign pc[31:0]      =  instr_addr_q [1] [31:0];
 
   ////////////////////
@@ -219,19 +217,22 @@ module fetch #(
   end
 
 // PC and pipeline clk enable control logic
-
   always @* begin
+    instr_addr_d = 0;
     r_clk_en_d   = 0;
-    stall_fetch  = stall;  // stall when retrieving instructions need wait time prepare next PC when changing PC, then do a pipeline bubble to disable the ce of next stage
+    stall_fetch  = stall;  // stall when retrieving instructions need wait time prepare next PC when changing pc, then do a pipeline bubble to disable the ce of next stage
     if (writeback_change_pc) begin
+      instr_addr_d = writeback_next_pc;
       r_clk_en_d   = 0;
     end else if (alu_change_pc) begin
+      instr_addr_d = alu_next_pc;
       r_clk_en_d   = 0;
     end else begin
+      instr_addr_d = hold_next_addr;
       r_clk_en_d   = r_clk_en;
     end
   end
-
+  
   /* Update registers conditions
   update registers only if this stage is enable and next stages are not stalled
   */
@@ -250,9 +251,5 @@ module fetch #(
 
     end
   end
-
-
-  
-
 
 endmodule
