@@ -5,7 +5,7 @@ module testbench (
     reg clk_i, rstn_i;
     always #5 clk_i=!clk_i; //100MHz clock
     initial begin 
-        $readmemh("/home/khai/Funny_RISCV/old_hw/hexs/sw.hex",u_ibex_top.u_ram.u_ram.u_impl_generic.mem, 32); //write instruction and data to memory
+        $readmemh("/home/cern/Funny_RISCV/fomatted_rtl/tb.sv",u_ibex_top.u_ram.u_ram.u_impl_generic.mem, 32); //write instruction and data to memory
         //u_ibex_top.main_memory_inst.memory_regfile[{32'h0000_1000>>2}] = 32'h12345678; //initial data memory 
     end
     // initial begin
