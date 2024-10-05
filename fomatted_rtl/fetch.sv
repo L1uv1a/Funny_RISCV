@@ -140,9 +140,10 @@ module fetch #(
   assign addr_incr_two = instr_addr_q[1] ? unaligned_is_compressed :
                                            aligned_is_compressed; 
 
-  assign instr_addr_next [31:0] = {(instr_addr_q [0] [31:1] +
+  assign instr_addr_next [31:1] = (instr_addr_q [0] [31:1] +
                             // Increment address by 4 or 2
-                            {29'd0,~addr_incr_two,addr_incr_two}), 0};
+                            {29'd0,~addr_incr_two,addr_incr_two});
+  assign instr_addr_next [0:0] = 1'b0;
 
   assign instr_addr_d = hold_next_addr;
 
