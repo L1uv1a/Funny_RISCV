@@ -51,7 +51,7 @@ module fetch #(
 
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
-  assign instr_addr_o = instr_addr_q[0] [1:0] ? PC_RESET : instr_addr_q[0];
+  assign instr_addr_o = instr_addr_q[0] [1:1] | instr_addr_q[0] [2:2] ? instr_addr_q[0] : PC_RESET;
   
   /*
                                            WIDTH = 32
