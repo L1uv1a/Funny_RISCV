@@ -185,10 +185,11 @@ module fetch #(
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
       occupied_q               <= '0;
-      instr_addr_q[0] [31:0]   <= PC_RESET;
+      instr_addr_q[0]          <= PC_RESET;
       instr_addr_q[1]          <= '0;
       instr_addr_q[2]          <= '0;
       rdata_q                  <= '0;
+      hold_next_addr           <= PC_RESET + 8;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
