@@ -140,7 +140,7 @@ module fetch #(
   assign addr_incr_two = instr_addr_q[1] ? unaligned_is_compressed :
                                            aligned_is_compressed; 
 
-  assign instr_addr_next = (instr_addr_q [0] [31:1] +
+  assign instr_addr_next [31:1] = (instr_addr_q [0] [31:1] +
                             // Increment address by 4 or 2
                             {29'd0,~addr_incr_two,addr_incr_two});
 
@@ -189,7 +189,7 @@ module fetch #(
       instr_addr_q[1]          <= '0;
       instr_addr_q[2]          <= '0;
       rdata_q                  <= '0;
-      hold_next_addr           <= PC_RESET + 8;
+      hold_next_addr           <= PC_RESET;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
