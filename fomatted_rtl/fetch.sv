@@ -52,7 +52,7 @@ module fetch #(
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
   assign instr_addr_o = instr_addr_q[0];
-  assign rdata = rdata_q[0];
+  assign rdata = occupied_q[0] ? rdata_q[0] : instr_rdata_i;
 
   /*
                                            WIDTH = 32
