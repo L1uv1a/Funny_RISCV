@@ -155,8 +155,6 @@ module fetch #(
 
   assign instr_addr_d = hold_next_addr;
 
-  assign pc[31:0]      =  instr_addr_q [1] [31:0];
-
   ////////////////////
   // FIFO registers //
   ////////////////////
@@ -199,27 +197,31 @@ module fetch #(
       instr_addr_q[2]          <= '0;
       rdata_q                  <= '0;
       hold_next_addr           <= PC_RESET;
+      pc                       <= '0;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
         instr_addr_q <= instr_addr_d;
         hold_next_addr <= instr_addr_next;
+        pc <= instr_addr_d[0] [31:0];
       end
     end
     if (writeback_change_pc) begin
       occupied_q               <= '0;
+      pc                       <= writeback_next_pc;
       instr_addr_q[0]          <= writeback_next_pc;
       instr_addr_q[1]          <= '0;
       instr_addr_q[2]          <= '0;
       rdata_q                  <= '0;
-      hold_next_addr           <= writeback_next_pc;
+      hold_next_addr           <= writeback_next_pc + 4;
     end else if (alu_change_pc) begin
       occupied_q               <= '0;
+      pc                       <= alu_next_pc;
       instr_addr_q[0]          <= alu_next_pc;
       instr_addr_q[1]          <= '0;
       instr_addr_q[2]          <= '0;
       rdata_q                  <= '0;
-      hold_next_addr <= alu_next_pc;
+      hold_next_addr <= alu_next_pc + 4;
     end 
   end
   
