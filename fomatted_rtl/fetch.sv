@@ -179,7 +179,7 @@ module fetch #(
   // clk enable logic for fetch stage
   wire disable_next_stage = ((alu_change_pc || writeback_change_pc) && !(stall || stall_fetch));
   always @(posedge clk, negedge rstn) begin
-    if (!rstn) r_clk_en <= 0;
+    if (!rstn) r_clk_en <= 1;
     // do pipeline bubble when need to change PC so that next stage will be disable
     // and will not execute the instructions already inside the pipeline
     else
