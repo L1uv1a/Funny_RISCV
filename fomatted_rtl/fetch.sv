@@ -191,7 +191,7 @@ module fetch #(
   (writeback_change_pc)  //
   );
 
-  always_ff @(posedge clk or negedge rstn) begin
+  always @(posedge clk or negedge rstn) begin
     if (!rstn) begin
       occupied_q               <= '0;
       instr_addr_q[0]          <= PC_RESET;
