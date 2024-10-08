@@ -205,7 +205,6 @@ module fetch #(
         instr_addr_q <= instr_addr_d;
         hold_next_addr <= instr_addr_next;
       end
-    end
     if (writeback_change_pc) begin
       occupied_q               <= '0;
       instr_addr_q[0]          <= writeback_next_pc;
@@ -221,6 +220,7 @@ module fetch #(
       rdata_q                  <= '0;
       hold_next_addr <= alu_next_pc;
     end 
+  end
   end
   
   for (genvar i = 0; i < DEPTH; i++) begin : g_fifo_regs
