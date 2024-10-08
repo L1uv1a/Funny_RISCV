@@ -48,10 +48,12 @@ module fetch #(
   logic             [31:0] hold_next_addr;
   logic                    aligned_is_compressed, unaligned_is_compressed;
   logic             [31:0] instr_addr_next;
-
+  logic first_fetch;
+  
+  assign first_fetch = !(instr_addr_q[0][1] | instr_addr_q[0][2]);
   assign instr_ack = instr_gnt_i;
   assign instr_req_o = instr_req;
-  assign instr_addr_o = instr_addr_q[0];
+  assign instr_addr_o = first_fetch ? PC_RESET : instr_addr_q[0];
   assign rdata = occupied_q[0] ? rdata_q[0] : instr_rdata_i;
 
   /*
@@ -94,7 +96,7 @@ module fetch #(
     assign occupied_d[i] = valid_popped[i] & ~flush;                          // check if data occupied in this depth or not
 
     // data flops are enabled if there is new data to shift into it, or
-    assign entry_en[i] = (valid_pushed[i+1] & pop_fifo) |
+    assign entry_en[i] = (valid_pushed[i+1] & pop_fifo) | 
                          // a new request is incoming and this is the lowest free entry
                          (lowest_free_entry[i] & ~pop_fifo);
 
@@ -194,11 +196,11 @@ module fetch #(
   always_ff @(posedge clk or negedge rstn) begin
     if (!rstn) begin
       occupied_q               <= '0;
-      instr_addr_q[0]          <= PC_RESET;
+      instr_addr_q[0]          <= '0;
       instr_addr_q[1]          <= '0;
       instr_addr_q[2]          <= '0;
       rdata_q                  <= '0;
-      hold_next_addr           <= PC_RESET;
+      hold_next_addr           <= '0;
     end else begin
       if (enable_update_registers) begin 
         occupied_q <= stall_bit ? occupied_q : occupied_d;
