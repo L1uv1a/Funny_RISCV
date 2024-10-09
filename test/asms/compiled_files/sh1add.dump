@@ -1,0 +1,110 @@
+
+/home/khai/Funny_RISCV/Compile/asms/compiled_files/sh1add.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <_start>:
+   0:	00100093          	li	ra,1
+   4:	00100113          	li	sp,1
+   8:	2020a1b3          	sh1add	gp,ra,sp
+   c:	00300213          	li	tp,3
+  10:	0c419263          	bne	gp,tp,d4 <fail>
+  14:	00300093          	li	ra,3
+  18:	00700113          	li	sp,7
+  1c:	2020a1b3          	sh1add	gp,ra,sp
+  20:	00d00213          	li	tp,13
+  24:	0a419863          	bne	gp,tp,d4 <fail>
+  28:	00000093          	li	ra,0
+  2c:	00000113          	li	sp,0
+  30:	2020a1b3          	sh1add	gp,ra,sp
+  34:	00000213          	li	tp,0
+  38:	08419e63          	bne	gp,tp,d4 <fail>
+  3c:	00000093          	li	ra,0
+  40:	ffff8137          	lui	sp,0xffff8
+  44:	2020a1b3          	sh1add	gp,ra,sp
+  48:	ffff8237          	lui	tp,0xffff8
+  4c:	08419463          	bne	gp,tp,d4 <fail>
+  50:	800000b7          	lui	ra,0x80000
+  54:	00000113          	li	sp,0
+  58:	2020a1b3          	sh1add	gp,ra,sp
+  5c:	00000213          	li	tp,0
+  60:	06419a63          	bne	gp,tp,d4 <fail>
+  64:	800000b7          	lui	ra,0x80000
+  68:	ffff8137          	lui	sp,0xffff8
+  6c:	2020a1b3          	sh1add	gp,ra,sp
+  70:	ffff8237          	lui	tp,0xffff8
+  74:	06419063          	bne	gp,tp,d4 <fail>
+  78:	800000b7          	lui	ra,0x80000
+  7c:	fff08093          	addi	ra,ra,-1 # 7fffffff <end+0x7ffffec6>
+  80:	00008137          	lui	sp,0x8
+  84:	fff10113          	addi	sp,sp,-1 # 7fff <end+0x7ec6>
+  88:	2020a1b3          	sh1add	gp,ra,sp
+  8c:	00008237          	lui	tp,0x8
+  90:	ffd20213          	addi	tp,tp,-3 # 7ffd <end+0x7ec4>
+  94:	04419063          	bne	gp,tp,d4 <fail>
+  98:	fff00093          	li	ra,-1
+  9c:	fff00113          	li	sp,-1
+  a0:	2020a1b3          	sh1add	gp,ra,sp
+  a4:	ffd00213          	li	tp,-3
+  a8:	02419663          	bne	gp,tp,d4 <fail>
+  ac:	00100093          	li	ra,1
+  b0:	80000137          	lui	sp,0x80000
+  b4:	fff10113          	addi	sp,sp,-1 # 7fffffff <end+0x7ffffec6>
+  b8:	2020a1b3          	sh1add	gp,ra,sp
+  bc:	80000237          	lui	tp,0x80000
+  c0:	00120213          	addi	tp,tp,1 # 80000001 <end+0x7ffffec8>
+  c4:	00419863          	bne	gp,tp,d4 <fail>
+
+000000c8 <pass>:
+  c8:	00000513          	li	a0,0
+  cc:	05d00893          	li	a7,93
+  d0:	00100073          	ebreak
+
+000000d4 <fail>:
+  d4:	00100513          	li	a0,1
+  d8:	05d00893          	li	a7,93
+  dc:	00100073          	ebreak
+
+000000e0 <data>:
+  e0:	5841                	.insn	2, 0x5841
+  e2:	0000                	.insn	2, 0x
+  e4:	7200                	.insn	2, 0x7200
+  e6:	7369                	.insn	2, 0x7369
+  e8:	01007663          	bgeu	zero,a6,f4 <data+0x14>
+  ec:	004e                	.insn	2, 0x004e
+  ee:	0000                	.insn	2, 0x
+  f0:	7205                	.insn	2, 0x7205
+  f2:	3376                	.insn	2, 0x3376
+  f4:	6932                	.insn	2, 0x6932
+  f6:	7032                	.insn	2, 0x7032
+  f8:	5f31                	.insn	2, 0x5f31
+  fa:	326d                	.insn	2, 0x326d
+  fc:	3070                	.insn	2, 0x3070
+  fe:	7a5f 6369 7273      	.insn	6, 0x727363697a5f
+ 104:	7032                	.insn	2, 0x7032
+ 106:	5f30                	.insn	2, 0x5f30
+ 108:	697a                	.insn	2, 0x697a
+ 10a:	6566                	.insn	2, 0x6566
+ 10c:	636e                	.insn	2, 0x636e
+ 10e:	6965                	.insn	2, 0x6965
+ 110:	7032                	.insn	2, 0x7032
+ 112:	5f30                	.insn	2, 0x5f30
+ 114:	6d7a                	.insn	2, 0x6d7a
+ 116:	756d                	.insn	2, 0x756d
+ 118:	316c                	.insn	2, 0x316c
+ 11a:	3070                	.insn	2, 0x3070
+ 11c:	7a5f 6162 7031      	.insn	6, 0x703161627a5f
+ 122:	5f30                	.insn	2, 0x5f30
+ 124:	627a                	.insn	2, 0x627a
+ 126:	3162                	.insn	2, 0x3162
+ 128:	3070                	.insn	2, 0x3070
+ 12a:	7a5f 6362 7031      	.insn	6, 0x703163627a5f
+ 130:	5f30                	.insn	2, 0x5f30
+ 132:	627a                	.insn	2, 0x627a
+ 134:	30703173          	csrrc	sp,0x307,zero
+	...
+
+00000139 <end>:
+ 139:	0000                	.insn	2, 0x
+	...

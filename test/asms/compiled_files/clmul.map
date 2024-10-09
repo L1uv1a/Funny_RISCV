@@ -1,0 +1,29 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+mem              0x00000000         0x00000400
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.memory         0x00000000       0xc8
+                0x00000000                        . = 0x0
+ *(.text)
+ .text          0x00000000       0x6c /home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.o
+                0x00000000                _start
+                0x00000000                main
+ *(*)
+ .data          0x0000006c        0x0 /home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.o
+ .bss           0x0000006c        0x0 /home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.o
+ .riscv.attributes
+                0x0000006c       0x59 /home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.o
+                0x000000c5                        end = .
+                0x000000c8                        . = ALIGN (0x4)
+ *fill*         0x000000c5        0x3 
+LOAD /home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.o
+LOAD /opt/riscv32/lib/gcc/riscv32-unknown-elf/13.2.0/libgcc.a
+OUTPUT(/home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.elf elf32-littleriscv)

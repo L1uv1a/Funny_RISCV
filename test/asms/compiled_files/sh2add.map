@@ -1,0 +1,29 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+mem              0x00000000         0x00000400
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.memory         0x00000000       0xd8
+                0x00000000                        . = 0x0
+ *(.text)
+ .text          0x00000000       0x7c /home/khai/Funny_RISCV/Compile/asms/compiled_files/sh2add.o
+                0x00000000                _start
+                0x00000000                main
+ *(*)
+ .data          0x0000007c        0x0 /home/khai/Funny_RISCV/Compile/asms/compiled_files/sh2add.o
+ .bss           0x0000007c        0x0 /home/khai/Funny_RISCV/Compile/asms/compiled_files/sh2add.o
+ .riscv.attributes
+                0x0000007c       0x59 /home/khai/Funny_RISCV/Compile/asms/compiled_files/sh2add.o
+                0x000000d5                        end = .
+                0x000000d8                        . = ALIGN (0x4)
+ *fill*         0x000000d5        0x3 
+LOAD /home/khai/Funny_RISCV/Compile/asms/compiled_files/sh2add.o
+LOAD /opt/riscv32/lib/gcc/riscv32-unknown-elf/13.2.0/libgcc.a
+OUTPUT(/home/khai/Funny_RISCV/Compile/asms/compiled_files/sh2add.elf elf32-littleriscv)

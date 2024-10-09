@@ -1,0 +1,81 @@
+
+/home/khai/Funny_RISCV/Compile/asms/compiled_files/clmul.elf:     file format elf32-littleriscv
+
+
+Disassembly of section .memory:
+
+00000000 <_start>:
+   0:	aaaab0b7          	lui	ra,0xaaaab
+   4:	aab08093          	addi	ra,ra,-1365 # aaaaaaab <end+0xaaaaa9e6>
+   8:	00030137          	lui	sp,0x30
+   c:	e7d10113          	addi	sp,sp,-387 # 2fe7d <end+0x2fdb8>
+  10:	0a2091b3          	clmul	gp,ra,sp
+  14:	fffc3237          	lui	tp,0xfffc3
+  18:	24f20213          	addi	tp,tp,591 # fffc324f <end+0xfffc318a>
+  1c:	04419263          	bne	gp,tp,60 <fail>
+  20:	00d00093          	li	ra,13
+  24:	00b00113          	li	sp,11
+  28:	0a2090b3          	clmul	ra,ra,sp
+  2c:	07f00213          	li	tp,127
+  30:	02409863          	bne	ra,tp,60 <fail>
+  34:	00d00093          	li	ra,13
+  38:	0a1090b3          	clmul	ra,ra,ra
+  3c:	05100213          	li	tp,81
+  40:	02409063          	bne	ra,tp,60 <fail>
+  44:	01f00093          	li	ra,31
+  48:	0a1010b3          	clmul	ra,zero,ra
+  4c:	00000213          	li	tp,0
+  50:	00409863          	bne	ra,tp,60 <fail>
+
+00000054 <pass>:
+  54:	00000513          	li	a0,0
+  58:	05d00893          	li	a7,93
+  5c:	00100073          	ebreak
+
+00000060 <fail>:
+  60:	00100513          	li	a0,1
+  64:	05d00893          	li	a7,93
+  68:	00100073          	ebreak
+
+0000006c <data>:
+  6c:	5841                	.insn	2, 0x5841
+  6e:	0000                	.insn	2, 0x
+  70:	7200                	.insn	2, 0x7200
+  72:	7369                	.insn	2, 0x7369
+  74:	01007663          	bgeu	zero,a6,80 <data+0x14>
+  78:	004e                	.insn	2, 0x004e
+  7a:	0000                	.insn	2, 0x
+  7c:	7205                	.insn	2, 0x7205
+  7e:	3376                	.insn	2, 0x3376
+  80:	6932                	.insn	2, 0x6932
+  82:	7032                	.insn	2, 0x7032
+  84:	5f31                	.insn	2, 0x5f31
+  86:	326d                	.insn	2, 0x326d
+  88:	3070                	.insn	2, 0x3070
+  8a:	7a5f 6369 7273      	.insn	6, 0x727363697a5f
+  90:	7032                	.insn	2, 0x7032
+  92:	5f30                	.insn	2, 0x5f30
+  94:	697a                	.insn	2, 0x697a
+  96:	6566                	.insn	2, 0x6566
+  98:	636e                	.insn	2, 0x636e
+  9a:	6965                	.insn	2, 0x6965
+  9c:	7032                	.insn	2, 0x7032
+  9e:	5f30                	.insn	2, 0x5f30
+  a0:	6d7a                	.insn	2, 0x6d7a
+  a2:	756d                	.insn	2, 0x756d
+  a4:	316c                	.insn	2, 0x316c
+  a6:	3070                	.insn	2, 0x3070
+  a8:	7a5f 6162 7031      	.insn	6, 0x703161627a5f
+  ae:	5f30                	.insn	2, 0x5f30
+  b0:	627a                	.insn	2, 0x627a
+  b2:	3162                	.insn	2, 0x3162
+  b4:	3070                	.insn	2, 0x3070
+  b6:	7a5f 6362 7031      	.insn	6, 0x703163627a5f
+  bc:	5f30                	.insn	2, 0x5f30
+  be:	627a                	.insn	2, 0x627a
+  c0:	30703173          	csrrc	sp,0x307,zero
+	...
+
+000000c5 <end>:
+  c5:	0000                	.insn	2, 0x
+	...
