@@ -48,7 +48,8 @@ sub-modules that carry out various functions within the processor:
 
 module core #(
     parameter PC_RESET     = 32'h00_00_00_00,
-    parameter TRAP_ADDRESS = 0
+    parameter TRAP_ADDRESS = 0,
+    parameter RVFI_STAGES = 4
 ) (
   input wire         i_clk,
                      i_rst_n,
@@ -75,7 +76,25 @@ module core #(
   // Interrupts
   input  wire        i_external_interrupt,  // interrupt from external source
   input  wire        i_software_interrupt,  // interrupt from software (inter-processor interrupt)
-  input  wire        i_timer_interrupt      // interrupt from timer
+  input  wire        i_timer_interrupt,      // interrupt from timer
+  //RVFI Outputs
+  output logic                         rvfi_valid,
+  output logic [31:0]                  rvfi_insn,
+  output logic [ 4:0]                  rvfi_rs1_addr,
+  output logic [ 4:0]                  rvfi_rs2_addr,
+  output logic [ 4:0]                  rvfi_rs3_addr,
+  output logic [31:0]                  rvfi_rs1_rdata,
+  output logic [31:0]                  rvfi_rs2_rdata,
+  output logic [31:0]                  rvfi_rs3_rdata,
+  output logic [ 4:0]                  rvfi_rd_addr,
+  output logic [31:0]                  rvfi_rd_wdata,
+  output logic [31:0]                  rvfi_pc_rdata,
+  output logic [31:0]                  rvfi_pc_wdata,
+  output logic [31:0]                  rvfi_mem_addr,
+  output logic [ 3:0]                  rvfi_mem_rmask,
+  output logic [ 3:0]                  rvfi_mem_wmask,
+  output logic [31:0]                  rvfi_mem_rdata,
+  output logic [31:0]                  rvfi_mem_wdata,
 );
 
   localparam ZICSR_EXTENSION = 1;
@@ -453,4 +472,162 @@ module core #(
     assign csr_return_from_trap = 0;
   end
 
+
+  //RVFI SHit
+
+  //Immediate signal storage
+  logic        rvfi_stage_valid     [RVFI_STAGES];
+  logic [31:0] rvfi_stage_insn      [RVFI_STAGES];
+  logic [ 4:0] rvfi_stage_rs1_addr  [RVFI_STAGES];
+  logic [ 4:0] rvfi_stage_rs2_addr  [RVFI_STAGES];
+  logic [ 4:0] rvfi_stage_rs3_addr  [RVFI_STAGES];
+  logic [31:0] rvfi_stage_rs1_rdata [RVFI_STAGES];
+  logic [31:0] rvfi_stage_rs2_rdata [RVFI_STAGES];
+  logic [31:0] rvfi_stage_rs3_rdata [RVFI_STAGES];
+  logic [ 4:0] rvfi_stage_rd_addr   [RVFI_STAGES];
+  logic [31:0] rvfi_stage_rd_wdata  [RVFI_STAGES];
+  logic [31:0] rvfi_stage_pc_rdata  [RVFI_STAGES];
+  logic [31:0] rvfi_stage_pc_wdata  [RVFI_STAGES];
+  logic [31:0] rvfi_stage_mem_addr  [RVFI_STAGES];
+  logic [ 3:0] rvfi_stage_mem_rmask [RVFI_STAGES];
+  logic [ 3:0] rvfi_stage_mem_wmask [RVFI_STAGES];
+  logic [31:0] rvfi_stage_mem_rdata [RVFI_STAGES];
+  logic [31:0] rvfi_stage_mem_wdata [RVFI_STAGES];
+
+  //Immediate signal storage
+  logic        rvfi_instr_new_wb;
+  logic        rvfi_intr_d;
+  logic        rvfi_intr_q;
+  logic        rvfi_set_trap_pc_d;
+  logic        rvfi_set_trap_pc_q;
+  logic [31:0] rvfi_insn_id;
+  logic [4:0]  rvfi_rs1_addr_d;
+  logic [4:0]  rvfi_rs1_addr_q;
+  logic [4:0]  rvfi_rs2_addr_d;
+  logic [4:0]  rvfi_rs2_addr_q;
+  logic [4:0]  rvfi_rs3_addr_d;
+  logic [31:0] rvfi_rs1_data_d;
+  logic [31:0] rvfi_rs1_data_q;
+  logic [31:0] rvfi_rs2_data_d;
+  logic [31:0] rvfi_rs2_data_q;
+  logic [31:0] rvfi_rs3_data_d;
+  logic [4:0]  rvfi_rd_addr_wb;
+  logic [4:0]  rvfi_rd_addr_q;
+  logic [4:0]  rvfi_rd_addr_d;
+  logic [31:0] rvfi_rd_wdata_wb;
+  logic [31:0] rvfi_rd_wdata_d;
+  logic [31:0] rvfi_rd_wdata_q;
+  logic        rvfi_rd_we_wb;
+  logic [3:0]  rvfi_mem_mask_int;
+  logic [31:0] rvfi_mem_rdata_d;
+  logic [31:0] rvfi_mem_rdata_q;
+  logic [31:0] rvfi_mem_wdata_d;
+  logic [31:0] rvfi_mem_wdata_q;
+  logic [31:0] rvfi_mem_addr_d;
+  logic [31:0] rvfi_mem_addr_q;
+  logic        rvfi_trap_id;
+  logic        rvfi_trap_wb;
+  logic        rvfi_irq_valid;
+  logic [63:0] rvfi_stage_order_d;
+  logic        rvfi_id_done;
+  logic        rvfi_wb_done;
+
+  //RVFI Output driver
+  assign rvfi_valid     = rvfi_stage_valid    [RVFI_STAGES-1];
+  assign rvfi__insn     = rvfi_stage_insn     [RVFI_STAGES-1];
+  assign rvfi_rs1_addr  = rvfi_stage_rs1_addr [RVFI_STAGES-1];
+  assign rvfi_rs2_addr  = rvfi_stage_rs2_addr [RVFI_STAGES-1];
+  assign rvfi_rs3_addr  = rvfi_stage_rs3_addr [RVFI_STAGES-1];
+  assign rvfi_rs1_rdata = rvfi_stage_rs1_rdata[RVFI_STAGES-1];
+  assign rvfi_rs2_rdata = rvfi_stage_rs2_rdata[RVFI_STAGES-1];
+  assign rvfi_rs3_rdata = rvfi_stage_rs3_rdata[RVFI_STAGES-1];
+  assign rvfi_rd_addr   = rvfi_stage_rd_addr  [RVFI_STAGES-1];
+  assign rvfi_rd_wdata  = rvfi_stage_rd_wdata [RVFI_STAGES-1];
+  assign rvfi_pc_rdata  = rvfi_stage_pc_rdata [RVFI_STAGES-1];
+  assign rvfi_pc_wdata  = rvfi_stage_pc_wdata [RVFI_STAGES-1];
+  assign rvfi_mem_addr  = rvfi_stage_mem_addr [RVFI_STAGES-1];
+  assign rvfi_mem_rmask = rvfi_stage_mem_rmask[RVFI_STAGES-1];
+  assign rvfi_mem_wmask = rvfi_stage_mem_wmask[RVFI_STAGES-1];
+  assign rvfi_mem_rdata = rvfi_stage_mem_rdata[RVFI_STAGES-1];
+  assign rvfi_mem_wdata = rvfi_stage_mem_wdata[RVFI_STAGES-1];
+  //End of RVFI shit
+
+  for (genvar i = 0; i < RVFI_STAGES ; i = i + 1) begin
+    always_ff @(posedge i_clk or negedge i_rst_n ) begin
+			if (!i_rst_n) begin
+				rvfi_stage_insn[i]                 <= '0;
+				rvfi_stage_rs1_addr[i]             <= '0;
+				rvfi_stage_rs2_addr[i]             <= '0;
+				rvfi_stage_rs3_addr[i]             <= '0;
+				rvfi_stage_pc_rdata[i]             <= '0;
+				rvfi_stage_pc_wdata[i]             <= '0;
+				rvfi_stage_mem_rmask[i]            <= '0;
+				rvfi_stage_mem_wmask[i]            <= '0;
+				rvfi_stage_valid[i]                <= '0;
+				rvfi_stage_rs1_rdata[i]            <= '0;
+				rvfi_stage_rs2_rdata[i]            <= '0;
+				rvfi_stage_rs3_rdata[i]            <= '0;
+				rvfi_stage_rd_wdata[i]             <= '0;
+				rvfi_stage_rd_addr[i]              <= '0;
+				rvfi_stage_mem_rdata[i]            <= '0;
+				rvfi_stage_mem_wdata[i]            <= '0;
+				rvfi_stage_mem_addr[i]             <= '0;
+			end else begin
+				
+        if (i == 0) begin
+          if (decoder_ce == 1) begin        // Fetch - Decode
+            rvfi_stage_insn[i]		             <= fetch_instr;
+			      rvfi_stage_pc_rdata[i]	           <= fetch_pc;
+            rvfi_stage_pc_wdata[i]             <= '0;
+          end
+        end
+        else if (i == 1) begin         // Decode - Execute (ALU)
+          if (alu_ce == 1) begin        
+            rvfi_stage_insn[i]				         <= rvfi_stage_insn[i-1];
+			      rvfi_stage_pc_rdata[i]			       <= rvfi_stage_pc_rdata [i-1];
+            rvfi_stage_pc_wdata[i]             <= '0;
+			      rvfi_stage_rs1_addr[i]             <= decoder_rs1_addr;
+			      rvfi_stage_rs2_addr[i]             <= decoder_rs2_addr;
+			      rvfi_stage_rs3_addr[i]             <= '0;
+            rvfi_stage_rd_addr[i]              <= decoder_rd_addr;                       
+          end
+        end
+        else if (i == 2) begin         // Execute - Memory
+          if (memoryaccess_ce == 1) begin        
+            rvfi_stage_insn[i]		             <= rvfi_stage_insn[i-1];
+            rvfi_stage_pc_rdata[i]			       <= alu_pc;
+            rvfi_stage_pc_wdata[i]             <= alu_next_pc;
+			      rvfi_stage_rs1_addr[i]             <= alu_rs1_addr;
+			      rvfi_stage_rs2_addr[i]             <= rvfi_stage_rs2_addr[i-1];
+			      rvfi_stage_rs3_addr[i]             <= '0;
+            rvfi_stage_rd_addr[i]              <= alu_rd_addr;
+            rvfi_stage_rs1_rdata[i]            <= alu_rs1;
+            rvfi_stage_rs2_rdata[i]            <= alu_rs2;
+            rvfi_stage_rs3_rdata[i]            <= '0;
+            rvfi_stage_rd_wdata[i]             <= alu_rd;                     
+          end
+        end
+        else if (i == 3) begin         // Memory - Writeback
+          if (writeback_ce == 1) begin        
+            rvfi_stage_insn[i]		             <= rvfi_stage_insn[i-1];
+            rvfi_stage_pc_rdata[i]			       <= rvfi_stage_pc_rdata[i-1];
+            rvfi_stage_pc_wdata[i]             <= rvfi_stage_pc_wdata[i-1];
+			      rvfi_stage_rs1_addr[i]             <= rvfi_stage_rs1_addr[i-1];
+			      rvfi_stage_rs2_addr[i]             <= rvfi_stage_rs2_addr[i-1];
+			      rvfi_stage_rs3_addr[i]             <= '0;
+            rvfi_stage_rd_addr[i]              <= memoryaccess_rd_addr;
+            rvfi_stage_rs1_rdata[i]            <= rvfi_stage_rs1_rdata[i-1];
+            rvfi_stage_rs2_rdata[i]            <= rvfi_stage_rs2_rdata[i-1];
+            rvfi_stage_rs3_rdata[i]            <= '0;
+            rvfi_stage_rd_wdata[i]             <= memoryaccess_rd;
+            rvfi_stage_mem_rmask[i]            <= o_wb_sel_data;
+            rvfi_stage_mem_wmask[i]            <= o_wb_we ? o_wb_sel_data : 4'b000;
+            rvfi_stage_mem_rdata[i]            <= i_wb_data_data;
+            rvfi_stage_mem_wdata[i]            <= o_wb_data_data;
+            rvfi_stage_mem_addr[i]             <= o_wb_addr_data;                 
+          end
+        end
+			end
+    end
+  end
 endmodule
